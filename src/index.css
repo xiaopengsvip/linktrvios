@@ -361,67 +361,6 @@ html { scrollbar-width: none; }
 }
 
 /* ============================================================
-   Stats Section
-   ============================================================ */
-
-.stats-section {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-md);
-  width: 100%;
-  max-width: 480px;
-  margin-bottom: var(--space-2xl);
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: var(--space-lg) var(--space-sm);
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: all 0.3s ease;
-  cursor: default;
-}
-
-.stat-card:hover {
-  background: var(--bg-card-hover);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.stat-icon {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.stat-icon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.stat-value {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.stat-label {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* ============================================================
    Skills Section
    ============================================================ */
 
@@ -878,19 +817,6 @@ html { scrollbar-width: none; }
     font-size: 26px;
   }
 
-  .stats-section {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-sm);
-  }
-
-  .stat-card {
-    padding: var(--space-md) var(--space-sm);
-  }
-
-  .stat-value {
-    font-size: 18px;
-  }
-
   .skills-grid {
     justify-content: center;
   }
@@ -937,19 +863,6 @@ html { scrollbar-width: none; }
     max-width: 260px;
   }
 
-  .stats-section {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-xs);
-  }
-
-  .stat-card {
-    padding: var(--space-sm) var(--space-xs);
-  }
-
-  .stat-value {
-    font-size: 16px;
-  }
-
   .skill-tag {
     padding: 6px 10px;
     font-size: 12px;
@@ -983,10 +896,6 @@ html { scrollbar-width: none; }
     font-size: 32px;
   }
 
-  .stats-section {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1018,7 +927,6 @@ html { scrollbar-width: none; }
   }
 
   .links-section,
-  .stats-section,
   .skills-section,
   .projects-section,
   .social-section,
@@ -1050,10 +958,6 @@ html { scrollbar-width: none; }
   .project-card:hover {
     transform: translateY(-8px);
   }
-
-  .stat-card:hover {
-    transform: translateY(-4px);
-  }
 }
 
 /* Ultra Wide (1440px+) */
@@ -1064,7 +968,6 @@ html { scrollbar-width: none; }
   }
 
   .links-section,
-  .stats-section,
   .skills-section,
   .projects-section,
   .social-section {
@@ -1085,10 +988,6 @@ html { scrollbar-width: none; }
   .project-card:hover {
     transform: translateY(-8px) scale(1.02);
   }
-
-  .stat-card:hover {
-    transform: translateY(-4px) scale(1.05);
-  }
 }
 
 /* Touch device optimizations */
@@ -1098,10 +997,6 @@ html { scrollbar-width: none; }
   }
 
   .project-card:active {
-    transform: scale(0.98);
-  }
-
-  .stat-card:active {
     transform: scale(0.98);
   }
 
@@ -1115,6 +1010,48 @@ html { scrollbar-width: none; }
 
   .action-btn:active {
     transform: scale(0.95);
+  }
+}
+
+/* ============================================================
+   移动端性能：关闭重型视觉效果
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .mesh-gradient,
+  .orb,
+  .stars,
+  .noise,
+  canvas {
+    display: none !important;
+  }
+  .bg-canvas {
+    background: linear-gradient(135deg, #0a0015 0%, #050520 50%, #0a0a2a 100%);
+  }
+}
+
+/* ============================================================
+   无障碍：减少动画
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .mesh-gradient,
+  .orb,
+  .stars,
+  .noise,
+  .shimmer-text::after,
+  canvas {
+    animation: none !important;
+    display: none !important;
   }
 }
 

@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Globe, Video, NotebookPen, Share2, Send, Mail,
+  Globe, Video, NotebookPen, Share2, Mail,
   QrCode, BadgeCheck, ChevronRight, X,
   Copy, Check, Sparkles, Zap, PenTool,
-  Users, FolderOpen, Star, TrendingUp, ExternalLink
+  ExternalLink
 } from 'lucide-react';
 import './index.css';
 
 /* ============================================================
-   Types
+   类型定义
    ============================================================ */
 
 interface LinkItem {
@@ -32,15 +32,8 @@ interface Project {
   color: string;
 }
 
-interface Stat {
-  label: string;
-  value: string;
-  icon: React.ReactNode;
-  color: string;
-}
-
 /* ============================================================
-   Translations
+   多语言文案
    ============================================================ */
 
 const translations = {
@@ -52,7 +45,6 @@ const translations = {
     sharePage: '分享',
     linksTitle: '导航',
     projectsTitle: '精选项目',
-    statsTitle: '数据概览',
     skillsTitle: '技能领域',
     socialTitle: '联系我',
     footer: '© {year} Evrett · All rights reserved',
@@ -70,7 +62,6 @@ const translations = {
     sharePage: 'Share',
     linksTitle: 'LINKS',
     projectsTitle: 'FEATURED PROJECTS',
-    statsTitle: 'OVERVIEW',
     skillsTitle: 'SKILLS',
     socialTitle: 'CONNECT',
     footer: '© {year} Evrett · All rights reserved',
@@ -85,7 +76,7 @@ const translations = {
 type Lang = keyof typeof translations;
 
 /* ============================================================
-   Data
+   静态数据
    ============================================================ */
 
 const links: LinkItem[] = [
@@ -150,7 +141,7 @@ const projects: Project[] = [
     id: '1',
     title: 'AIOS 智能工作台',
     desc: '集成多种 AI 模型的智能助手平台，支持多轮对话、代码生成、文档处理等功能。',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=200&auto=format&fit=crop',
+    image: '/projects/aios.png',
     tags: ['AI', 'React', 'Node.js'],
     url: 'https://aios.vios.top',
     color: '#a855f7',
@@ -159,7 +150,7 @@ const projects: Project[] = [
     id: '2',
     title: '短视频流媒体',
     desc: '高性能视频流媒体平台，支持实时转码、智能推荐和多端播放。',
-    image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400&h=200&auto=format&fit=crop',
+    image: '/projects/video.png',
     tags: ['视频', 'FFmpeg', 'Vue'],
     url: 'https://all.allapple.top',
     color: '#ec4899',
@@ -168,37 +159,10 @@ const projects: Project[] = [
     id: '3',
     title: '公众号排版引擎',
     desc: 'AI 驱动的 Markdown 转微信公众号排版工具，多主题一键切换。',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=200&auto=format&fit=crop',
+    image: '/projects/gzh.png',
     tags: ['Markdown', 'AI', '设计'],
     url: 'https://gzh.allapple.top',
     color: '#06b6d4',
-  },
-];
-
-const stats: Stat[] = [
-  {
-    label: '项目',
-    value: '10+',
-    icon: React.createElement(FolderOpen),
-    color: '#3b82f6',
-  },
-  {
-    label: '用户',
-    value: '5K+',
-    icon: React.createElement(Users),
-    color: '#ec4899',
-  },
-  {
-    label: 'Stars',
-    value: '200+',
-    icon: React.createElement(Star),
-    color: '#f59e0b',
-  },
-  {
-    label: '贡献',
-    value: '500+',
-    icon: React.createElement(TrendingUp),
-    color: '#10b981',
   },
 ];
 
@@ -216,7 +180,7 @@ const skills = [
 ];
 
 /* ============================================================
-   Particles Background
+   粒子背景（仅桌面端通过 CSS 控制隐藏）
    ============================================================ */
 
 const Particles: React.FC = () => {
@@ -321,12 +285,13 @@ const Particles: React.FC = () => {
     <canvas
       ref={canvasRef}
       style={{ position: 'absolute', inset: 0, zIndex: 1 }}
+      aria-hidden="true"
     />
   );
 };
 
 /* ============================================================
-   QR Code Modal
+   二维码弹窗
    ============================================================ */
 
 const QRModal: React.FC<{ onClose: () => void; lang: Lang }> = ({ onClose, lang }) => {
@@ -345,6 +310,15 @@ const QRModal: React.FC<{ onClose: () => void; lang: Lang }> = ({ onClose, lang 
     });
   }, []);
 
+  // Esc 关闭弹窗
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   return (
     <motion.div
       className="modal-overlay"
@@ -352,27 +326,35 @@ const QRModal: React.FC<{ onClose: () => void; lang: Lang }> = ({ onClose, lang 
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
+      role="presentation"
     >
       <motion.div
         className="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.scanQR}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e: React.MouseEvent) => e.stopPropagation()}
         style={{ position: 'relative' }}
       >
-        <button className="modal-close" onClick={onClose}>
+        <button
+          className="modal-close"
+          onClick={onClose}
+          aria-label={t.close}
+        >
           <X size={16} />
         </button>
-        <div className="modal-title">{t.scanQR}</div>
-        <canvas ref={canvasRef} style={{ margin: '0 auto', display: 'block' }} />
+        <div className="modal-title" id="qr-modal-title">{t.scanQR}</div>
+        <canvas ref={canvasRef} style={{ margin: '0 auto', display: 'block' }} aria-label={t.scanQR} />
       </motion.div>
     </motion.div>
   );
 };
 
 /* ============================================================
-   Main App
+   主应用
    ============================================================ */
 
 const App: React.FC = () => {
@@ -412,11 +394,19 @@ const App: React.FC = () => {
     }
   }, [handleCopy, t.bio]);
 
+  // 分享到 X（与 X 主页入口分开）
+  const handleShareToX = useCallback(() => {
+    const text = "Check out Evrett's portfolio! 🚀";
+    const url = 'https://linktr.vios.top';
+    const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    window.open(xUrl, '_blank', 'width=550,height=420');
+  }, []);
+
   const currentYear = new Date().getFullYear();
 
   return (
     <>
-      {/* Background */}
+      {/* 背景层 */}
       <div className="bg-canvas">
         <div className="mesh-gradient" />
         <div className="orb orb-1" />
@@ -428,25 +418,29 @@ const App: React.FC = () => {
         <div className="noise" />
       </div>
 
-      {/* Language Toggle */}
-      <div className="lang-toggle">
+      {/* 语言切换 */}
+      <div className="lang-toggle" role="group" aria-label="Language">
         <button
           className={`lang-btn ${lang === 'zh' ? 'active' : ''}`}
           onClick={() => setLang('zh')}
+          aria-label="切换到中文"
+          aria-pressed={lang === 'zh'}
         >
           中
         </button>
         <button
           className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
           onClick={() => setLang('en')}
+          aria-label="Switch to English"
+          aria-pressed={lang === 'en'}
         >
           EN
         </button>
       </div>
 
-      {/* Main Content */}
+      {/* 主内容 */}
       <div className="main-content">
-        {/* Profile */}
+        {/* 个人资料 */}
         <motion.div
           className="profile"
           initial={{ opacity: 0, y: -20 }}
@@ -466,7 +460,7 @@ const App: React.FC = () => {
                 }}
               />
             </div>
-            <div className="verified-badge">
+            <div className="verified-badge" aria-hidden="true">
               <BadgeCheck />
             </div>
           </div>
@@ -476,54 +470,29 @@ const App: React.FC = () => {
           <div className="profile-bio">{t.bio}</div>
         </motion.div>
 
-        {/* Actions */}
+        {/* 操作按钮 */}
         <motion.div
           className="actions"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          <button className="action-btn" onClick={() => setShowQR(true)}>
+          <button className="action-btn" onClick={() => setShowQR(true)} aria-label={t.digitalCard}>
             <QrCode />
             {t.digitalCard}
           </button>
-          <button className="action-btn" onClick={handleShare}>
+          <button className="action-btn" onClick={handleShare} aria-label={copied ? t.copied : t.sharePage}>
             {copied ? <Check /> : <Share2 />}
             {copied ? t.copied : t.sharePage}
           </button>
         </motion.div>
 
-        {/* Stats Section */}
-        <motion.div
-          className="stats-section"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-        >
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              className="stat-card"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 + i * 0.1, duration: 0.4 }}
-              whileHover={{ scale: 1.05, y: -2 }}
-            >
-              <div className="stat-icon" style={{ color: stat.color }}>
-                {stat.icon}
-              </div>
-              <div className="stat-value">{stat.value}</div>
-              <div className="stat-label">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Skills Section */}
+        {/* 技能领域 */}
         <motion.div
           className="skills-section"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
         >
           <div className="section-title">{t.skillsTitle}</div>
           <div className="skills-grid">
@@ -533,7 +502,7 @@ const App: React.FC = () => {
                 className="skill-tag"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7 + i * 0.05, duration: 0.3 }}
+                transition={{ delay: 0.5 + i * 0.05, duration: 0.3 }}
                 whileHover={{ scale: 1.1, y: -2 }}
                 style={{ borderColor: `${skill.color}40` }}
               >
@@ -544,7 +513,7 @@ const App: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Links Section */}
+        {/* 导航链接 */}
         <div className="section-title">{t.linksTitle}</div>
         <div className="links-section">
           {links.map((link, i) => (
@@ -586,7 +555,7 @@ const App: React.FC = () => {
           ))}
         </div>
 
-        {/* Projects Section */}
+        {/* 精选项目 */}
         <motion.div
           className="projects-section"
           initial={{ opacity: 0 }}
@@ -629,7 +598,7 @@ const App: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Social Section */}
+        {/* 社交链接 */}
         <motion.div
           className="social-section"
           initial={{ opacity: 0 }}
@@ -638,58 +607,58 @@ const App: React.FC = () => {
         >
           <div className="section-title">{t.socialTitle}</div>
           <div className="social-grid">
+            {/* GitHub 主页 */}
             <a
               href="https://github.com/xiaopengsvip"
               target="_blank"
               rel="noopener noreferrer"
               className="social-btn"
-              title="GitHub"
+              aria-label="GitHub"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
             </a>
-            <button
-              className="social-btn twitter-share"
-              onClick={() => {
-                const text = 'Check out Evrett\'s portfolio! 🚀';
-                const url = 'https://linktr.vios.top';
-                const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-                window.open(xUrl, '_blank', 'width=550,height=420');
-              }}
-              title="Share on X"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231h0.001Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
-            </svg>
-            </button>
+            {/* X 主页入口 */}
             <a
-              href="https://t.me"
+              href="https://x.com"
               target="_blank"
               rel="noopener noreferrer"
               className="social-btn"
-              title="Telegram"
+              aria-label="X (Twitter)"
             >
-              <Send size={20} />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231h0.001Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
+              </svg>
             </a>
+            {/* 分享到 X（与主页入口分开） */}
+            <button
+              className="social-btn twitter-share"
+              onClick={handleShareToX}
+              aria-label="分享到 X"
+            >
+              <Share2 size={20} aria-hidden="true" />
+            </button>
+            {/* 邮箱 */}
             <a
               href="mailto:hi@allapple.top"
               className="social-btn"
-              title="Email"
+              aria-label="Email"
             >
-              <Mail size={20} />
+              <Mail size={20} aria-hidden="true" />
             </a>
+            {/* 复制链接 */}
             <button
               className="social-btn"
               onClick={handleCopy}
-              title={t.copyLink}
+              aria-label={t.copyLink}
             >
-              {copied ? <Check size={20} /> : <Copy size={20} />}
+              {copied ? <Check size={20} aria-hidden="true" /> : <Copy size={20} aria-hidden="true" />}
             </button>
           </div>
         </motion.div>
 
-        {/* Footer */}
+        {/* 页脚 */}
         <div className="footer">
           <div className="footer-content">
             <span>{t.footer.replace('{year}', String(currentYear))}</span>
@@ -699,7 +668,7 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* QR Modal */}
+      {/* 二维码弹窗 */}
       <AnimatePresence>
         {showQR && <QRModal onClose={() => setShowQR(false)} lang={lang} />}
       </AnimatePresence>
