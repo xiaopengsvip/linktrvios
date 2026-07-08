@@ -336,7 +336,7 @@ const QRModal: React.FC<{ onClose: () => void; lang: Lang }> = ({ onClose, lang 
   useEffect(() => {
     import('qrcode').then((QRCode: any) => {
       if (canvasRef.current) {
-        QRCode.toCanvas(canvasRef.current, 'https://linktr.allapple.top', {
+        QRCode.toCanvas(canvasRef.current, 'https://linktr.vios.top', {
           width: 200,
           margin: 2,
           color: { dark: '#ffffff', light: '#00000000' },
@@ -383,12 +383,12 @@ const App: React.FC = () => {
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText('https://linktr.allapple.top');
+      await navigator.clipboard.writeText('https://linktr.vios.top');
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
       const el = document.createElement('textarea');
-      el.value = 'https://linktr.allapple.top';
+      el.value = 'https://linktr.vios.top';
       document.body.appendChild(el);
       el.select();
       document.execCommand('copy');
@@ -404,7 +404,7 @@ const App: React.FC = () => {
         await navigator.share({
           title: 'Evrett',
           text: t.bio,
-          url: 'https://linktr.allapple.top',
+          url: 'https://linktr.vios.top',
         });
       } catch {}
     } else {
@@ -653,7 +653,7 @@ const App: React.FC = () => {
               className="social-btn twitter-share"
               onClick={() => {
                 const text = 'Check out Evrett\'s portfolio! 🚀';
-                const url = 'https://linktr.allapple.top';
+                const url = 'https://linktr.vios.top';
                 const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
                 window.open(xUrl, '_blank', 'width=550,height=420');
               }}
