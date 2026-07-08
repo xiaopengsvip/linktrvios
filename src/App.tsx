@@ -650,7 +650,7 @@ const App: React.FC = () => {
             </svg>
             </a>
             <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Check out Evrett\'s portfolio! 🚀')}&url=${encodeURIComponent('https://linktr.allapple.top')}`}
+              href={`https://x.com/intent/tweet?text=${encodeURIComponent('Check out Evrett\'s portfolio! 🚀')}&url=${encodeURIComponent('https://linktr.allapple.top')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="social-btn twitter-share"
