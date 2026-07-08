@@ -27,7 +27,7 @@ interface LinkItem {
 
 const translations = {
   zh: {
-    name: 'allapple.top',
+    name: 'Evrett',
     bio: 'Apple风格聚合页 · 视频 · 音乐 · 灵感',
     digitalCard: '数字名片',
     sharePage: '分享本页',
@@ -41,7 +41,7 @@ const translations = {
     copyLink: '复制链接',
   },
   en: {
-    name: 'allapple.top',
+    name: 'Evrett',
     bio: 'Apple Style Hub · Video · Music · Inspiration',
     digitalCard: 'Digital Card',
     sharePage: 'Share',
@@ -322,7 +322,11 @@ const App: React.FC = () => {
     <>
       {/* Background */}
       <div className="bg-canvas">
-        <div className="aurora" />
+        <div className="mesh-gradient" />
+        <div className="orb orb-1" />
+        <div className="orb orb-2" />
+        <div className="orb orb-3" />
+        <div className="stars" />
         <div className="grid-overlay" />
         <Particles />
         <div className="noise" />
@@ -357,7 +361,7 @@ const App: React.FC = () => {
             <div className="avatar-ring">
               <img
                 className="avatar"
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=200&h=200&fit=crop&crop=face"
+                src="/avatar.jpg"
                 alt="Profile"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'data:image/svg+xml,' + encodeURIComponent(

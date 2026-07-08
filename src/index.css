@@ -70,54 +70,102 @@ html { scrollbar-width: none; }
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  background: linear-gradient(135deg, #0a0015 0%, #050520 30%, #0a0a2a 60%, #050510 100%);
 }
 
-/* Aurora gradient mesh */
-.aurora {
+/* Animated mesh gradient */
+.mesh-gradient {
   position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
+  inset: 0;
   background:
-    radial-gradient(ellipse 600px 400px at 20% 30%, rgba(0, 245, 255, 0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 500px 500px at 80% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 400px 600px at 60% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 70%),
-    radial-gradient(ellipse 800px 300px at 30% 70%, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
-  animation: auroraMove 20s ease-in-out infinite;
+    radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.2) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.18) 0%, transparent 35%),
+    radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.12) 0%, transparent 35%);
+  filter: blur(60px);
+  animation: meshMove 15s ease-in-out infinite;
 }
 
-@keyframes auroraMove {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(-5%, 3%) rotate(2deg); }
-  50% { transform: translate(3%, -5%) rotate(-1deg); }
-  75% { transform: translate(-3%, -3%) rotate(1deg); }
+@keyframes meshMove {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(2deg); }
+  50% { transform: scale(1.05) rotate(-1deg); }
+  75% { transform: scale(0.95) rotate(1deg); }
 }
 
-/* Grid pattern overlay */
+/* Glowing orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orbFloat 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 300px;
+  height: 300px;
+  background: rgba(139, 92, 246, 0.3);
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 250px;
+  height: 250px;
+  background: rgba(6, 182, 212, 0.25);
+  top: 60%;
+  right: 10%;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 200px;
+  height: 200px;
+  background: rgba(236, 72, 153, 0.2);
+  bottom: 10%;
+  left: 30%;
+  animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.9); }
+  75% { transform: translate(15px, 30px) scale(1.05); }
+}
+
+/* Star field */
+.stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.6), transparent);
+  background-size: 200px 100px;
+  animation: starsTwinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes starsTwinkle {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Grid overlay */
 .grid-overlay {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
-}
-
-/* Floating particles */
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: float linear infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(100vh) scale(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 20%, transparent 70%);
 }
 
 /* Noise texture */
