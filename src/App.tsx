@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Globe, Video, NotebookPen, Share2, Send, Mail,
   QrCode, BadgeCheck, ChevronRight, X,
-  Copy, Check, Sparkles, Zap, PenTool
+  Copy, Check, Sparkles, Zap, PenTool,
+  Users, FolderOpen, Star, TrendingUp, ExternalLink
 } from 'lucide-react';
 import './index.css';
 
@@ -21,6 +22,23 @@ interface LinkItem {
   glowColor: string;
 }
 
+interface Project {
+  id: string;
+  title: string;
+  desc: string;
+  image: string;
+  tags: string[];
+  url: string;
+  color: string;
+}
+
+interface Stat {
+  label: string;
+  value: string;
+  icon: React.ReactNode;
+  color: string;
+}
+
 /* ============================================================
    Translations
    ============================================================ */
@@ -28,31 +46,39 @@ interface LinkItem {
 const translations = {
   zh: {
     name: 'Evrett',
-    bio: 'Apple风格聚合页 · 视频 · 音乐 · 灵感',
+    title: '全栈开发者 · AI 探索者',
+    bio: '热爱技术与设计，专注于创造优秀的数字体验。擅长 AI 应用开发、全栈工程和产品设计。',
     digitalCard: '数字名片',
-    sharePage: '分享本页',
+    sharePage: '分享',
     linksTitle: '导航',
-    galleryTitle: '精选图集',
-    socialTitle: '关注我们',
-    footer: '© {year} allapple.top · Designed by 小鹏',
+    projectsTitle: '精选项目',
+    statsTitle: '数据概览',
+    skillsTitle: '技能领域',
+    socialTitle: '联系我',
+    footer: '© {year} Evrett · All rights reserved',
     scanQR: '扫码访问',
     close: '关闭',
     copied: '已复制',
     copyLink: '复制链接',
+    viewProject: '查看项目',
   },
   en: {
     name: 'Evrett',
-    bio: 'Apple Style Hub · Video · Music · Inspiration',
+    title: 'Full-stack Developer · AI Explorer',
+    bio: 'Passionate about technology and design, focused on creating excellent digital experiences. Specializing in AI applications, full-stack engineering, and product design.',
     digitalCard: 'Digital Card',
     sharePage: 'Share',
     linksTitle: 'LINKS',
-    galleryTitle: 'GALLERY',
-    socialTitle: 'FOLLOW US',
-    footer: '© {year} allapple.top · Designed by Xiaopeng',
+    projectsTitle: 'FEATURED PROJECTS',
+    statsTitle: 'OVERVIEW',
+    skillsTitle: 'SKILLS',
+    socialTitle: 'CONNECT',
+    footer: '© {year} Evrett · All rights reserved',
     scanQR: 'Scan to visit',
     close: 'Close',
     copied: 'Copied',
     copyLink: 'Copy Link',
+    viewProject: 'View Project',
   }
 };
 
@@ -119,13 +145,74 @@ const links: LinkItem[] = [
   },
 ];
 
-const galleryImages = [
-  'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=600&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=600&auto=format&fit=crop',
+const projects: Project[] = [
+  {
+    id: '1',
+    title: 'AIOS 智能工作台',
+    desc: '集成多种 AI 模型的智能助手平台，支持多轮对话、代码生成、文档处理等功能。',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=200&auto=format&fit=crop',
+    tags: ['AI', 'React', 'Node.js'],
+    url: 'https://aios.vios.top',
+    color: '#a855f7',
+  },
+  {
+    id: '2',
+    title: '短视频流媒体',
+    desc: '高性能视频流媒体平台，支持实时转码、智能推荐和多端播放。',
+    image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400&h=200&auto=format&fit=crop',
+    tags: ['视频', 'FFmpeg', 'Vue'],
+    url: 'https://all.allapple.top',
+    color: '#ec4899',
+  },
+  {
+    id: '3',
+    title: '公众号排版引擎',
+    desc: 'AI 驱动的 Markdown 转微信公众号排版工具，多主题一键切换。',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=200&auto=format&fit=crop',
+    tags: ['Markdown', 'AI', '设计'],
+    url: 'https://gzh.allapple.top',
+    color: '#06b6d4',
+  },
+];
+
+const stats: Stat[] = [
+  {
+    label: '项目',
+    value: '10+',
+    icon: React.createElement(FolderOpen),
+    color: '#3b82f6',
+  },
+  {
+    label: '用户',
+    value: '5K+',
+    icon: React.createElement(Users),
+    color: '#ec4899',
+  },
+  {
+    label: 'Stars',
+    value: '200+',
+    icon: React.createElement(Star),
+    color: '#f59e0b',
+  },
+  {
+    label: '贡献',
+    value: '500+',
+    icon: React.createElement(TrendingUp),
+    color: '#10b981',
+  },
+];
+
+const skills = [
+  { name: 'React', color: '#61dafb' },
+  { name: 'TypeScript', color: '#3178c6' },
+  { name: 'Node.js', color: '#339933' },
+  { name: 'Python', color: '#3776ab' },
+  { name: 'AI/ML', color: '#ff6f61' },
+  { name: 'PostgreSQL', color: '#336791' },
+  { name: 'Docker', color: '#2496ed' },
+  { name: 'UI Design', color: '#ff4081' },
+  { name: 'Figma', color: '#f24e1e' },
+  { name: 'Git', color: '#f05032' },
 ];
 
 /* ============================================================
@@ -315,7 +402,7 @@ const App: React.FC = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'allapple.top',
+          title: 'Evrett',
           text: t.bio,
           url: 'https://linktr.allapple.top',
         });
@@ -385,6 +472,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="profile-name shimmer-text">{t.name}</div>
+          <div className="profile-title">{t.title}</div>
           <div className="profile-bio">{t.bio}</div>
         </motion.div>
 
@@ -403,6 +491,57 @@ const App: React.FC = () => {
             {copied ? <Check /> : <Share2 />}
             {copied ? t.copied : t.sharePage}
           </button>
+        </motion.div>
+
+        {/* Stats Section */}
+        <motion.div
+          className="stats-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+        >
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              className="stat-card"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 + i * 0.1, duration: 0.4 }}
+              whileHover={{ scale: 1.05, y: -2 }}
+            >
+              <div className="stat-icon" style={{ color: stat.color }}>
+                {stat.icon}
+              </div>
+              <div className="stat-value">{stat.value}</div>
+              <div className="stat-label">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Skills Section */}
+        <motion.div
+          className="skills-section"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          <div className="section-title">{t.skillsTitle}</div>
+          <div className="skills-grid">
+            {skills.map((skill, i) => (
+              <motion.div
+                key={skill.name}
+                className="skill-tag"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 + i * 0.05, duration: 0.3 }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                style={{ borderColor: `${skill.color}40` }}
+              >
+                <span className="skill-dot" style={{ background: skill.color }} />
+                {skill.name}
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Links Section */}
@@ -447,24 +586,45 @@ const App: React.FC = () => {
           ))}
         </div>
 
-        {/* Gallery Section */}
+        {/* Projects Section */}
         <motion.div
-          className="gallery-section"
+          className="projects-section"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
         >
-          <div className="section-title">{t.galleryTitle}</div>
-          <div className="gallery-scroll">
-            {galleryImages.map((img, i) => (
-              <motion.div
-                key={i}
-                className="gallery-item"
-                whileHover={{ scale: 1.05, y: -4 }}
-                transition={{ duration: 0.3 }}
+          <div className="section-title">{t.projectsTitle}</div>
+          <div className="projects-grid">
+            {projects.map((project, i) => (
+              <motion.a
+                key={project.id}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-card"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 + i * 0.15, duration: 0.5 }}
+                whileHover={{ y: -8, scale: 1.02 }}
               >
-                <img src={img} alt={`Gallery ${i + 1}`} loading="lazy" />
-              </motion.div>
+                <div className="project-image">
+                  <img src={project.image} alt={project.title} loading="lazy" />
+                  <div className="project-overlay">
+                    <ExternalLink size={20} />
+                  </div>
+                </div>
+                <div className="project-info">
+                  <div className="project-title">{project.title}</div>
+                  <div className="project-desc">{project.desc}</div>
+                  <div className="project-tags">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="project-tag" style={{ color: project.color }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.a>
             ))}
           </div>
         </motion.div>
@@ -476,45 +636,69 @@ const App: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.6 }}
         >
-          <a
-            href="https://x.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-btn"
-            title="X (Twitter)"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <div className="section-title">{t.socialTitle}</div>
+          <div className="social-grid">
+            <a
+              href="https://github.com/xiaopengsvip"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn"
+              title="GitHub"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            </a>
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn"
+              title="X (Twitter)"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231h0.001Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
             </svg>
-          </a>
-          <a href="mailto:hi@allapple.top" className="social-btn" title="Email">
-            <Mail size={20} />
-          </a>
-          <a
-            href="https://t.me"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-btn"
-            title="Telegram"
-          >
-            <Send size={20} />
-          </a>
-          <button className="social-btn" onClick={handleCopy} title={t.copyLink}>
-            {copied ? <Check size={20} /> : <Copy size={20} />}
-          </button>
+            </a>
+            <a
+              href="https://t.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn"
+              title="Telegram"
+            >
+              <Send size={20} />
+            </a>
+            <a
+              href="mailto:hi@allapple.top"
+              className="social-btn"
+              title="Email"
+            >
+              <Mail size={20} />
+            </a>
+            <button
+              className="social-btn"
+              onClick={handleCopy}
+              title={t.copyLink}
+            >
+              {copied ? <Check size={20} /> : <Copy size={20} />}
+            </button>
+          </div>
         </motion.div>
 
         {/* Footer */}
         <div className="footer">
-          {t.footer.replace('{year}', String(currentYear))}
+          <div className="footer-content">
+            <span>{t.footer.replace('{year}', String(currentYear))}</span>
+            <span className="footer-dot">·</span>
+            <span>Powered by React</span>
+          </div>
         </div>
       </div>
 
       {/* QR Modal */}
       <AnimatePresence>
-        {showQR && (
-          <QRModal onClose={() => setShowQR(false)} lang={lang} />
-        )}
+        {showQR && <QRModal onClose={() => setShowQR(false)} lang={lang} />}
       </AnimatePresence>
     </>
   );
