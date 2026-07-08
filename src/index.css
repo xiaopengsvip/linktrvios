@@ -222,7 +222,6 @@ html { scrollbar-width: none; }
     var(--accent-pink),
     var(--accent-cyan)
   );
-  animation: ringRotate 4s linear infinite;
 }
 
 @keyframes ringRotate {

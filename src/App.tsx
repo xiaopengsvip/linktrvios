@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Globe, Video, NotebookPen, Share2, Send, Mail,
   QrCode, BadgeCheck, ChevronRight, X,
-  Copy, Check, Sparkles, Zap
+  Copy, Check, Sparkles, Zap, PenTool
 } from 'lucide-react';
 import './index.css';
 
@@ -107,6 +107,15 @@ const links: LinkItem[] = [
     icon: React.createElement(Zap),
     color: '#f59e0b',
     glowColor: 'rgba(245, 158, 11, 0.3)',
+  },
+  {
+    id: '6',
+    title: 'gzh.allapple.top',
+    desc: '公众号排版引擎',
+    url: 'https://gzh.allapple.top',
+    icon: React.createElement(PenTool),
+    color: '#06b6d4',
+    glowColor: 'rgba(6, 182, 212, 0.3)',
   },
 ];
 
