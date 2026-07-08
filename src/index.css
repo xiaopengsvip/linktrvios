@@ -913,3 +913,258 @@ html { scrollbar-width: none; }
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ============================================================
+   Responsive - Enhanced
+   ============================================================ */
+
+/* Small Mobile (320px - 374px) */
+@media (max-width: 374px) {
+  .main-content {
+    padding: var(--space-md) var(--space-xs);
+  }
+
+  .profile-name {
+    font-size: 24px;
+  }
+
+  .profile-title {
+    font-size: 13px;
+  }
+
+  .profile-bio {
+    font-size: 13px;
+    max-width: 260px;
+  }
+
+  .stats-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .stat-card {
+    padding: var(--space-sm) var(--space-xs);
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .skill-tag {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .link-card {
+    padding: var(--space-md);
+  }
+
+  .link-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .link-title {
+    font-size: 14px;
+  }
+
+  .link-desc {
+    font-size: 12px;
+  }
+}
+
+/* Tablet (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .main-content {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .profile-name {
+    font-size: 32px;
+  }
+
+  .stats-section {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-content {
+    padding: var(--space-3xl) var(--space-2xl);
+  }
+
+  .profile-name {
+    font-size: 36px;
+  }
+
+  .links-section {
+    max-width: 520px;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Large Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .main-content {
+    padding: var(--space-3xl) var(--space-3xl);
+  }
+
+  .links-section,
+  .stats-section,
+  .skills-section,
+  .projects-section,
+  .social-section,
+  .footer {
+    max-width: 560px;
+  }
+
+  .profile-bio {
+    max-width: 400px;
+  }
+
+  .link-card {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .link-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .link-title {
+    font-size: 17px;
+  }
+
+  .link-desc {
+    font-size: 14px;
+  }
+
+  .project-card:hover {
+    transform: translateY(-8px);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Ultra Wide (1440px+) */
+@media (min-width: 1440px) {
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .links-section,
+  .stats-section,
+  .skills-section,
+  .projects-section,
+  .social-section {
+    max-width: 640px;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Hover effects only for non-touch devices */
+@media (hover: hover) {
+  .link-card:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+
+  .project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px) scale(1.05);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .link-card:active {
+    transform: scale(0.98);
+  }
+
+  .project-card:active {
+    transform: scale(0.98);
+  }
+
+  .stat-card:active {
+    transform: scale(0.98);
+  }
+
+  .skill-tag:active {
+    transform: scale(0.95);
+  }
+
+  .social-btn:active {
+    transform: scale(0.95);
+  }
+
+  .action-btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Twitter Share Button Special Style */
+.social-btn.twitter-share {
+  background: linear-gradient(135deg, rgba(29, 161, 242, 0.15), rgba(29, 161, 242, 0.05));
+  border-color: rgba(29, 161, 242, 0.3);
+}
+
+.social-btn.twitter-share:hover {
+  background: linear-gradient(135deg, rgba(29, 161, 242, 0.25), rgba(29, 161, 242, 0.1));
+  border-color: rgba(29, 161, 242, 0.5);
+  box-shadow: 0 4px 20px rgba(29, 161, 242, 0.3);
+}
+
+/* Twitter embed placeholder */
+.twitter-embed {
+  width: 100%;
+  max-width: 480px;
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.twitter-embed-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.twitter-follow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.twitter-follow-btn:hover {
+  background: #1a91da;
+  transform: scale(1.05);
+}
