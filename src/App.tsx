@@ -482,23 +482,28 @@ const App: React.FC = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Evrett',
-          text: t.bio,
+          title: 'Everett · AI System Architect | vios.top',
+          text: t.name + ' · ' + t.title + ' — ' + 'https://linktr.vios.top',
           url: 'https://linktr.vios.top',
         });
       } catch {}
     } else {
       handleCopy();
     }
-  }, [handleCopy, t.bio]);
+  }, [handleCopy, t.name, t.title]);
 
   // 分享到 X（与 X 主页入口分开）
   const handleShareToX = useCallback(() => {
-    const text = "Check out Evrett's portfolio! 🚀";
+    const shareTexts = {
+      zh: 'Everett · AI 系统架构师 | vios.top 🚀 多智能体编排 · 自动化流程 · 私有化部署，聚合 AIOS/OpenClaw/ENXX 等 8 大项目',
+      en: 'Everett · AI System Architect | vios.top 🚀 Multi-agent orchestration · Automation · Private deployment — AIOS, OpenClaw, ENXX & more',
+    };
+    const text = shareTexts[lang];
     const url = 'https://linktr.vios.top';
-    const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    const via = 'reoe_x';
+    const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&via=${via}&hashtags=${encodeURIComponent('Everett,vios,AI')}`;
     window.open(xUrl, '_blank', 'width=550,height=420');
-  }, []);
+  }, [lang]);
 
   const currentYear = new Date().getFullYear();
 
@@ -774,7 +779,7 @@ const App: React.FC = () => {
           <div className="footer-content">
             <span>{t.footer.replace('{year}', String(currentYear))}</span>
             <span className="footer-dot">·</span>
-            <span>Powered by React</span>
+            <span>vios.top · Everett</span>
           </div>
         </div>
       </div>
