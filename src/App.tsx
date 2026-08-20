@@ -4,7 +4,7 @@ import {
   Globe, Video, NotebookPen, Share2, Mail,
   QrCode, BadgeCheck, ChevronRight, X,
   Copy, Check, Sparkles, Zap, PenTool,
-  ExternalLink
+  ExternalLink, Gauge, Bot, Network, BookOpen
 } from 'lucide-react';
 import './index.css';
 
@@ -38,16 +38,16 @@ interface Project {
 
 const translations = {
   zh: {
-    name: 'Evrett',
-    title: '全栈开发者 · AI 探索者',
-    bio: '热爱技术与设计，专注于创造优秀的数字体验。擅长 AI 应用开发、全栈工程和产品设计。',
+    name: 'Everett',
+    title: 'AI 系统架构师 · 全栈开发者',
+    bio: '构建下一代智能生产力系统。从多智能体编排到自动化流程，从私有化部署到产品级系统设计，让 AI 真正为人工作。',
     digitalCard: '数字名片',
     sharePage: '分享',
     linksTitle: '导航',
     projectsTitle: '精选项目',
     skillsTitle: '技能领域',
     socialTitle: '联系我',
-    footer: '© {year} Evrett · All rights reserved',
+    footer: '© {year} Everett · All rights reserved',
     scanQR: '扫码访问',
     close: '关闭',
     copied: '已复制',
@@ -55,16 +55,16 @@ const translations = {
     viewProject: '查看项目',
   },
   en: {
-    name: 'Evrett',
-    title: 'Full-stack Developer · AI Explorer',
-    bio: 'Passionate about technology and design, focused on creating excellent digital experiences. Specializing in AI applications, full-stack engineering, and product design.',
+    name: 'Everett',
+    title: 'AI System Architect · Full-stack Dev',
+    bio: 'Building next-generation intelligent productivity systems. From multi-agent orchestration to automation, private deployment to product-level design.',
     digitalCard: 'Digital Card',
     sharePage: 'Share',
     linksTitle: 'LINKS',
     projectsTitle: 'FEATURED PROJECTS',
     skillsTitle: 'SKILLS',
     socialTitle: 'CONNECT',
-    footer: '© {year} Evrett · All rights reserved',
+    footer: '© {year} Everett · All rights reserved',
     scanQR: 'Scan to visit',
     close: 'Close',
     copied: 'Copied',
@@ -91,30 +91,30 @@ const links: LinkItem[] = [
   },
   {
     id: '2',
-    title: 'all.allapple.top',
-    desc: '短视频流媒体平台',
-    url: 'https://all.allapple.top',
-    icon: React.createElement(Video),
-    color: '#ec4899',
-    glowColor: 'rgba(236, 72, 153, 0.3)',
+    title: 'dashboard.allapple.top',
+    desc: '项目管理面板',
+    url: 'https://dashboard.allapple.top',
+    icon: React.createElement(Gauge),
+    color: '#8b5cf6',
+    glowColor: 'rgba(139, 92, 246, 0.3)',
   },
   {
     id: '3',
-    title: 'notes.allapple.top',
-    desc: '极简笔记与博客',
-    url: 'https://notes.allapple.top',
-    icon: React.createElement(NotebookPen),
-    color: '#10b981',
-    glowColor: 'rgba(16, 185, 129, 0.3)',
-  },
-  {
-    id: '4',
     title: 'aios.vios.top',
     desc: 'AI 工作台 · 智能助手',
     url: 'https://aios.vios.top',
     icon: React.createElement(Sparkles),
     color: '#a855f7',
     glowColor: 'rgba(168, 85, 247, 0.3)',
+  },
+  {
+    id: '4',
+    title: 'openclaw.allapple.top',
+    desc: '个人 AI 助手',
+    url: 'https://openclaw.allapple.top',
+    icon: React.createElement(Bot),
+    color: '#ec4899',
+    glowColor: 'rgba(236, 72, 153, 0.3)',
   },
   {
     id: '5',
@@ -127,12 +127,30 @@ const links: LinkItem[] = [
   },
   {
     id: '6',
-    title: 'gzh.allapple.top',
-    desc: '公众号排版引擎',
-    url: 'https://gzh.allapple.top',
-    icon: React.createElement(PenTool),
+    title: 'genealogy.allapple.top',
+    desc: '葛氏族谱平台',
+    url: 'https://genealogy.allapple.top',
+    icon: React.createElement(Network),
+    color: '#10b981',
+    glowColor: 'rgba(16, 185, 129, 0.3)',
+  },
+  {
+    id: '7',
+    title: 'notes.allapple.top',
+    desc: '极简笔记与博客',
+    url: 'https://notes.allapple.top',
+    icon: React.createElement(NotebookPen),
     color: '#06b6d4',
     glowColor: 'rgba(6, 182, 212, 0.3)',
+  },
+  {
+    id: '8',
+    title: 'docs.allapple.top',
+    desc: 'API 文档',
+    url: 'https://docs.allapple.top',
+    icon: React.createElement(BookOpen),
+    color: '#f43f5e',
+    glowColor: 'rgba(244, 63, 94, 0.3)',
   },
 ];
 
@@ -140,7 +158,7 @@ const projects: Project[] = [
   {
     id: '1',
     title: 'AIOS 智能工作台',
-    desc: '集成多种 AI 模型的智能助手平台，支持多轮对话、代码生成、文档处理等功能。',
+    desc: '企业级 AI 超级工作台，全平台覆盖，集成多模型 AI 对话、图片生成、MCP 工作流、Agent 编排。',
     image: '/projects/aios.png',
     tags: ['AI', 'React', 'Node.js'],
     url: 'https://aios.vios.top',
@@ -148,21 +166,30 @@ const projects: Project[] = [
   },
   {
     id: '2',
-    title: '短视频流媒体',
-    desc: '高性能视频流媒体平台，支持实时转码、智能推荐和多端播放。',
-    image: '/projects/video.png',
-    tags: ['视频', 'FFmpeg', 'Vue'],
-    url: 'https://all.allapple.top',
+    title: 'OpenClaw',
+    desc: '真正能做事的个人 AI 助手。支持本地大模型、浏览器控制、系统访问、持久化记忆。',
+    image: '/projects/openclaw.png',
+    tags: ['AI Agent', 'Local LLM', 'Browser'],
+    url: 'https://openclaw.allapple.top',
     color: '#ec4899',
   },
   {
     id: '3',
-    title: '公众号排版引擎',
-    desc: 'AI 驱动的 Markdown 转微信公众号排版工具，多主题一键切换。',
-    image: '/projects/gzh.png',
-    tags: ['Markdown', 'AI', '设计'],
-    url: 'https://gzh.allapple.top',
-    color: '#06b6d4',
+    title: 'ENXX 英语自学',
+    desc: 'AI 驱动的英语自学平台，纠错/翻译/拆句/口语陪练，艾宾浩斯复习系统。',
+    image: '/projects/enxx.png',
+    tags: ['AI', 'Education', 'NLP'],
+    url: 'https://enxx.allapple.top',
+    color: '#f59e0b',
+  },
+  {
+    id: '4',
+    title: 'AllApple Dashboard',
+    desc: '域名体系管理中心，12 项目/13 子域管理，Caddy 集成，EVR-AI 同步。',
+    image: '/projects/dashboard.png',
+    tags: ['Dashboard', 'Next.js', 'DevOps'],
+    url: 'https://dashboard.allapple.top',
+    color: '#8b5cf6',
   },
 ];
 
@@ -291,6 +318,77 @@ const Particles: React.FC = () => {
 };
 
 /* ============================================================
+   打字机效果组件
+   ============================================================ */
+
+const Typewriter: React.FC<{ text: string; speed?: number }> = ({ text, speed = 40 }) => {
+  const [display, setDisplay] = useState('');
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    setDisplay('');
+    setDone(false);
+    let i = 0;
+    const timer = setInterval(() => {
+      i += 1;
+      setDisplay(text.slice(0, i));
+      if (i >= text.length) {
+        clearInterval(timer);
+        setDone(true);
+      }
+    }, speed);
+    return () => clearInterval(timer);
+  }, [text, speed]);
+
+  return (
+    <span className="typewriter-text">
+      {display}
+      {!done && <span className="typewriter-cursor" />}
+    </span>
+  );
+};
+
+/* ============================================================
+   3D Tilt 卡片组件（鼠标跟随倾斜）
+   ============================================================ */
+
+const TiltCard: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  maxTilt?: number;
+  style?: React.CSSProperties;
+}> = ({ children, className, maxTilt = 8, style }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(800px) rotateY(${x * maxTilt}deg) rotateX(${-y * maxTilt}deg) translateY(-3px)`;
+  };
+
+  const handleLeave = () => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) translateY(0)';
+  };
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{ ...style, transition: 'transform 0.15s ease-out', transformStyle: 'preserve-3d' }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+    >
+      {children}
+    </div>
+  );
+};
+
+/* ============================================================
    二维码弹窗
    ============================================================ */
 
@@ -413,6 +511,9 @@ const App: React.FC = () => {
         <div className="orb orb-2" />
         <div className="orb orb-3" />
         <div className="stars" />
+        <div className="shooting-star" />
+        <div className="shooting-star" />
+        <div className="shooting-star" />
         <div className="grid-overlay" />
         <Particles />
         <div className="noise" />
@@ -467,7 +568,9 @@ const App: React.FC = () => {
 
           <div className="profile-name shimmer-text">{t.name}</div>
           <div className="profile-title">{t.title}</div>
-          <div className="profile-bio">{t.bio}</div>
+          <div className="profile-bio">
+            <Typewriter text={t.bio} speed={35} />
+          </div>
         </motion.div>
 
         {/* 操作按钮 */}
@@ -517,12 +620,8 @@ const App: React.FC = () => {
         <div className="section-title">{t.linksTitle}</div>
         <div className="links-section">
           {links.map((link, i) => (
-            <motion.a
+            <motion.div
               key={link.id}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-card"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -530,37 +629,48 @@ const App: React.FC = () => {
                 duration: 0.6,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
-              style={{
-                '--glow-color': link.glowColor,
-                animationDelay: `${i * 0.1}s`,
-              } as React.CSSProperties}
+              style={{ width: '100%' }}
             >
-              <div
-                className="link-icon"
-                style={{
-                  background: `${link.color}15`,
-                  color: link.color,
-                }}
-              >
-                {link.icon}
-              </div>
-              <div className="link-info">
-                <div className="link-title">{link.title}</div>
-                <div className="link-desc">{link.desc}</div>
-              </div>
-              <div className="link-arrow">
-                <ChevronRight size={18} />
-              </div>
-            </motion.a>
+              <TiltCard>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-card"
+                  style={{
+                    '--glow-color': link.glowColor,
+                    animationDelay: `${i * 0.1}s`,
+                  } as React.CSSProperties}
+                >
+                  <div
+                    className="link-icon"
+                    style={{
+                      background: `${link.color}15`,
+                      color: link.color,
+                    }}
+                  >
+                    {link.icon}
+                  </div>
+                  <div className="link-info">
+                    <div className="link-title">{link.title}</div>
+                    <div className="link-desc">{link.desc}</div>
+                  </div>
+                  <div className="link-arrow">
+                    <ChevronRight size={18} />
+                  </div>
+                </a>
+              </TiltCard>
+            </motion.div>
           ))}
         </div>
 
         {/* 精选项目 */}
         <motion.div
           className="projects-section"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7 }}
         >
           <div className="section-title">{t.projectsTitle}</div>
           <div className="projects-grid">
@@ -571,9 +681,10 @@ const App: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="project-card"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 + i * 0.15, duration: 0.5 }}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ delay: i * 0.12, duration: 0.5 }}
                 whileHover={{ y: -8, scale: 1.02 }}
               >
                 <div className="project-image">
@@ -621,7 +732,7 @@ const App: React.FC = () => {
             </a>
             {/* X 主页入口 */}
             <a
-              href="https://x.com"
+              href="https://x.com/reoe_x"
               target="_blank"
               rel="noopener noreferrer"
               className="social-btn"
@@ -641,7 +752,7 @@ const App: React.FC = () => {
             </button>
             {/* 邮箱 */}
             <a
-              href="mailto:hi@allapple.top"
+              href="mailto:x@allapple.top"
               className="social-btn"
               aria-label="Email"
             >

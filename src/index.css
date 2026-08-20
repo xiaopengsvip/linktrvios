@@ -252,6 +252,7 @@ html { scrollbar-width: none; }
 }
 
 .avatar-ring {
+  position: relative;
   width: 110px;
   height: 110px;
   border-radius: 50%;
@@ -802,6 +803,139 @@ html { scrollbar-width: none; }
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
+}
+
+/* ============================================================
+   Typewriter Effect
+   ============================================================ */
+
+.typewriter-text {
+  display: inline;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--accent-cyan);
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 0.8s step-end infinite;
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ============================================================
+   Avatar Ring Rotation (conic spin)
+   ============================================================ */
+
+.avatar-ring {
+  animation: ringSpin 6s linear infinite;
+}
+
+.avatar-ring::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(0, 245, 255, 0.4) 60deg,
+    transparent 120deg,
+    transparent 180deg,
+    rgba(168, 85, 247, 0.4) 240deg,
+    transparent 300deg
+  );
+  filter: blur(6px);
+  animation: ringSpin 6s linear infinite;
+  z-index: -1;
+}
+
+@keyframes ringSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.avatar-wrapper:hover .avatar {
+  transform: scale(1.06);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   Shooting Stars
+   ============================================================ */
+
+.shooting-star {
+  position: absolute;
+  width: 120px;
+  height: 1.5px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.9), transparent);
+  border-radius: 2px;
+  opacity: 0;
+  animation: shoot 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.shooting-star:nth-child(2) { top: 30%; left: 70%; animation-delay: 2.3s; }
+.shooting-star:nth-child(3) { top: 60%; left: 40%; animation-delay: 4.6s; }
+
+@keyframes shoot {
+  0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; }
+  5% { opacity: 1; }
+  15% { transform: translateX(-420px) translateY(280px) rotate(-35deg); opacity: 0; }
+  100% { transform: translateX(-420px) translateY(280px) rotate(-35deg); opacity: 0; }
+}
+
+/* ============================================================
+   Link Card Glow Enhancements
+   ============================================================ */
+
+.link-card .link-arrow {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.link-card:hover .link-arrow {
+  transform: translateX(4px);
+  color: var(--accent-cyan);
+}
+
+.link-card .link-icon {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.link-card:hover .link-icon {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow: 0 0 20px var(--glow-color, rgba(0, 245, 255, 0.3));
+}
+
+/* Scroll-triggered entrance for section titles */
+.section-title {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: titleLine 1.2s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes titleLine {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
 }
 
 /* ============================================================
