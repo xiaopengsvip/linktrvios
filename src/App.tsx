@@ -79,7 +79,20 @@ export default function App() {
   const [qrOpen, setQrOpen] = useState(false);
   const [qrSrc, setQrSrc] = useState<string>('');
   const [copied, setCopied] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
   const copyTimer = useRef<number | undefined>(undefined);
+  const shareTimer = useRef<number | undefined>(undefined);
+
+  /* 环境识别：微信内置浏览器 / 移动端 */
+  const env = useMemo(() => {
+    const ua = navigator.userAgent || '';
+    return {
+      wechat: /MicroMessenger/i.test(ua),
+      qq: /\sQQ\//i.test(ua) || /QQBrowser/i.test(ua),
+      mobile: /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || window.innerWidth < 720,
+    };
+  }, []);
   const reduced = usePrefersReducedMotion();
   const toastTimer = useRef<number | undefined>(undefined);
 
@@ -99,18 +112,56 @@ export default function App() {
     window.history.replaceState({}, '', url.toString());
   }, [lang]);
 
-  /* 分享 */
+  /* 分享文案：纯文本版，粘到任何平台都能带出完整信息 */
+  const shareText = useMemo(
+    () =>
+      [
+        `${t.shareTitle}`,
+        t.shareDesc,
+        lang === 'zh' ? '多智能体编排 · 自动化流程 · 私有化部署' : 'Multi-agent orchestration · Automation · Private deployment',
+        SITE.url,
+      ].join('\n'),
+    [t, lang],
+  );
+
+  /* 原生分享（移动端 / 支持的浏览器） */
   const onShare = useCallback(async () => {
-    const data = { title: t.shareTitle, text: t.bio, url: SITE.url };
+    const data = { title: t.shareTitle, text: t.shareDesc, url: SITE.url };
+    if (env.wechat) {
+      // 微信内不支持 Web Share / 自定义分享，给出明确手势引导
+      flash(t.shareWechatTip);
+      return;
+    }
     try {
       if (navigator.share) {
         await navigator.share(data);
         return;
       }
-      await navigator.clipboard.writeText(SITE.url);
-      flash(lang === 'zh' ? '链接已复制' : 'Link copied');
-    } catch { /* 用户取消，忽略 */ }
-  }, [t, lang, flash]);
+    } catch {
+      return; // 用户取消，静默
+    }
+    setShareOpen(true);
+  }, [t, env, flash]);
+
+  /* 复制分享文案 */
+  const onCopyShareText = useCallback(async () => {
+    let ok = true;
+    try {
+      await navigator.clipboard.writeText(shareText);
+    } catch {
+      ok = false;
+    }
+    setShareCopied(ok);
+    window.clearTimeout(shareTimer.current);
+    shareTimer.current = window.setTimeout(() => setShareCopied(false), 2000);
+    flash(ok ? t.shareCopiedText : SITE.url);
+  }, [shareText, t, flash]);
+
+  /* 分享到 X（intent 已带 url，X 会自动抓取卡片） */
+  const shareToX = useCallback(() => {
+    const u = `https://x.com/intent/post?text=${encodeURIComponent(t.shareTitle)}&url=${encodeURIComponent(SITE.url)}`;
+    window.open(u, '_blank', 'noopener,noreferrer');
+  }, [t]);
 
   /* 复制邮箱 */
   const onCopyMail = useCallback(async () => {
@@ -152,8 +203,12 @@ export default function App() {
   }, [qrOpen, qrSrc]);
 
   useEffect(() => {
-    if (!qrOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setQrOpen(false); };
+    const anyOpen = qrOpen || shareOpen;
+    if (!anyOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      if (shareOpen) setShareOpen(false); else setQrOpen(false);
+    };
     setCopied(false);
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
@@ -161,7 +216,7 @@ export default function App() {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [qrOpen]);
+  }, [qrOpen, shareOpen]);
 
   const statList = useMemo(
     () => [
@@ -448,11 +503,73 @@ export default function App() {
                 </span>
                 {copied ? t.copiedLink : t.copyLink}
               </button>
-              <button className="btn btn--ghost" onClick={onShare}>
+              <button className="btn btn--ghost" onClick={() => setShareOpen(true)}>
                 <span className="btn__icon"><Icon name="share" size={15} /></span>
                 {t.share}
               </button>
             </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* ---------------- 分享浮窗：链接预览卡 + 分享文案 + 各平台入口 ---------------- */}
+      {shareOpen ? (
+        <div className="sheet sheet--share" role="dialog" aria-modal="true" aria-label={t.shareHeading}
+             onClick={() => setShareOpen(false)}>
+          <div className="sheet__panel" onClick={(e) => e.stopPropagation()}>
+            <span className="sheet__grip" aria-hidden="true" />
+            <button className="sheet__x" onClick={() => setShareOpen(false)} aria-label={t.close}>
+              <Icon name="close" size={16} />
+            </button>
+
+            <div className="sheet__head">
+              <span className="sheet__mark">
+                <img src="/logo-64.png" srcSet="/logo-64.png 1x, /logo-128.png 2x"
+                     width={34} height={34} alt="" decoding="async" />
+              </span>
+              <span>
+                <span className="sheet__host">{t.shareHeading}</span>
+                <span className="sheet__sub">{t.sharePreviewLabel}</span>
+              </span>
+            </div>
+
+            {/* 链接预览卡：真实复刻 X / 微信 抓取到的封面 + 标题 + 简介 */}
+            <div className="lprev">
+              <img className="lprev__cover" src="/og-image.png" width={1200} height={630}
+                   alt={t.shareTitle} decoding="async" />
+              <div className="lprev__body">
+                <span className="lprev__dom">
+                  <img src="/favicon-32.png" width={15} height={15} alt="" decoding="async" />
+                  {SITE.host}
+                </span>
+                <span className="lprev__t">{t.shareTitle}</span>
+                <span className="lprev__d">{t.shareDesc}</span>
+              </div>
+            </div>
+
+            {/* 分享文案预览（可复制） */}
+            <pre className="sheet__text">{shareText}</pre>
+
+            <div className="sheet__acts sheet__acts--3">
+              <button className="btn btn--primary" onClick={onCopyShareText} data-done={shareCopied}>
+                <span className="btn__icon">
+                  <Icon name={shareCopied ? 'check' : 'copy'} size={15} />
+                </span>
+                {shareCopied ? t.shareCopiedText : t.shareCopyText}
+              </button>
+              <button className="btn btn--ghost" onClick={shareToX}>
+                <span className="btn__icon"><Icon name="x" size={14} /></span>
+                {t.shareToX}
+              </button>
+              <button className="btn btn--ghost" onClick={onShare}>
+                <span className="btn__icon"><Icon name="wechat" size={15} /></span>
+                {t.shareWechat}
+              </button>
+            </div>
+
+            <p className="sheet__note">
+              {env.wechat || env.qq ? t.shareWechatTip : t.shareNote}
+            </p>
           </div>
         </div>
       ) : null}

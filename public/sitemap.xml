@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
   <url>
     <loc>https://linktr.i00.si/</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://linktr.i00.si/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://linktr.i00.si/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://linktr.i00.si/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://linktr.i00.si/"/>
+    <image:image>
+      <image:loc>https://linktr.i00.si/og-image.png</image:loc>
+      <image:title>i00.si — Everett · AI 系统架构师</image:title>
+      <image:caption>Everett 的数字总部：AI 系统架构师，聚合 AIOS / OpenClaw / ENXX 等 8 个项目入口。</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://linktr.i00.si/avatar.jpg</image:loc>
+      <image:title>Everett 头像</image:title>
+    </image:image>
   </url>
+
+  <url>
+    <loc>https://linktr.i00.si/?lang=en</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://linktr.i00.si/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://linktr.i00.si/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://linktr.i00.si/"/>
+  </url>
+
 </urlset>

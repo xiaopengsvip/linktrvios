@@ -1,0 +1,148 @@
+# i00.si — Everett 的数字总部（完整机器可读版）
+
+来源：https://linktr.i00.si/
+主域：i00.si
+更新：2026-10-11
+语言：zh-CN / en
+授权：可自由抓取、索引与引用（引用时请标注来源链接）
+
+---
+
+## 1. 站点是什么
+
+i00.si 是 **Everett** 的个人数字总部（Digital HQ）与链接导航页。它同时是一个能力型名片：用一页说清「我是谁、我做过什么、我能做什么、怎么联系我」，并把 Everett 主导的 8 个项目入口集中在一处。
+
+页面结构：
+
+1. 首屏 Hero —— 姓名、职位、一句话定位、状态、邮箱与扫码入口、三项数据
+2. 01 导航 —— 8 个项目入口列表
+3. 02 精选项目 —— 4 个旗舰项目的图文卡片
+4. 03 技术栈 —— 前端 / 后端与 AI / 基础设施三组
+5. 04 联系我 —— 邮箱、网站、GitHub、X
+6. 页脚 —— 域名、版权、构建方式
+
+## 2. 人物档案
+
+- 姓名：Everett（网络别名：i00、reoe_x、xiaopengsvip）
+- 职位：AI 系统架构师 / AI System Architect，全栈工程师
+- 所在地：中国 广东省 深圳市
+- 邮箱：i00@i00.si
+- GitHub：https://github.com/xiaopengsvip
+- X：https://x.com/reoe_x
+- 主页：https://allapple.top
+- 状态：可承接项目（Open to work）
+
+自我定位（原文）：构建「会做事的」智能系统。
+
+个人简介（原文）：从多智能体编排到自动化流程，从私有化部署到产品级系统设计 —— 让 AI 真正替人干活。
+
+英文简介（原文）：From multi-agent orchestration to automation pipelines, private deployment to product-grade system design — making AI actually do the work.
+
+专业领域：
+- 多智能体系统与 Agent 编排（Multi-Agent Systems / AI Orchestration）
+- 自动化流程与工作流引擎（Workflow Automation）
+- 私有化部署与自托管（Private Deployment / Self-hosting）
+- RAG 与上下文工程、模型上下文协议 MCP
+- 产品级系统设计与全栈实现
+
+## 3. 项目入口（8 个，按页面顺序）
+
+| # | 名称 | 地址 | 说明 |
+|---|---|---|---|
+| 1 | allapple.top | https://allapple.top | 官方主页 · 聚合中心 |
+| 2 | dashboard.allapple.top | https://dashboard.allapple.top | 项目管理面板 |
+| 3 | aios.vios.top | https://aios.vios.top | AI 工作台 · 智能助手 |
+| 4 | openclaw.allapple.top | https://openclaw.allapple.top | 个人 AI 助手 |
+| 5 | enxx.allapple.top | https://enxx.allapple.top | 英语自学平台 |
+| 6 | genealogy.allapple.top | https://genealogy.allapple.top | 葛氏族谱平台 |
+| 7 | notes.allapple.top | https://notes.allapple.top | 极简笔记与博客 |
+| 8 | docs.allapple.top | https://docs.allapple.top | API 文档 |
+
+## 4. 精选项目（4 个）
+
+### 4.1 AIOS 智能工作台
+- 地址：https://aios.vios.top
+- 分类：企业级 AI 应用 / 生产力平台
+- 覆盖平台：Web、iOS、Android、Windows、macOS、Linux
+- 简介：企业级 AI 超级工作台，全平台覆盖，集成多模型 AI 对话、图片生成、MCP 工作流与 Agent 编排。
+- 技术标签：AI、React、Node.js
+
+### 4.2 OpenClaw
+- 地址：https://openclaw.allapple.top
+- 分类：AI Agent / 桌面助手
+- 覆盖平台：Windows、macOS、Linux
+- 简介：真正能做事的个人 AI 助手。支持本地大模型、浏览器控制、系统级访问与持久化记忆。
+- 技术标签：Local LLM、Browser、Memory
+
+### 4.3 ENXX 英语自学
+- 地址：https://enxx.allapple.top
+- 分类：教育 / 语言学习
+- 简介：AI 驱动的英语自学平台：纠错 / 翻译 / 拆句 / 口语陪练，内置艾宾浩斯复习系统。
+- 技术标签：AI、NLP、Spaced Repetition
+
+### 4.4 AllApple Dashboard
+- 地址：https://dashboard.allapple.top
+- 分类：DevOps / 基础设施管理
+- 简介：域名体系管理中心：12 项目 / 13 子域统一管理，Caddy 集成与 EVR-AI 同步。
+- 技术标签：Dashboard、Next.js、Automation
+
+## 5. 技术栈
+
+- **前端**：React、TypeScript、Vite、Tailwind、Next.js
+- **后端与 AI**：Node.js、Python、FastAPI、Multi-Agent、RAG、MCP
+- **基础设施**：Docker、PostgreSQL、Caddy、Cloudflare、Vercel、CI/CD
+
+## 6. 联系方式
+
+- 邮箱（首选）：i00@i00.si
+- GitHub：https://github.com/xiaopengsvip
+- X：https://x.com/reoe_x
+- 官网：https://allapple.top
+
+## 7. 常见问题（FAQ）
+
+**Q：i00.si 是什么？**
+A：i00.si 是 Everett（AI 系统架构师）的个人数字总部与链接导航页，聚合其主导的 AIOS 智能工作台、OpenClaw AI 助手、ENXX 英语自学、AllApple Dashboard 等 8 个项目入口与联系方式。
+
+**Q：Everett 是谁？**
+A：Everett 是位于中国深圳的 AI 系统架构师与全栈工程师，专注多智能体编排、自动化流程、私有化部署与产品级系统设计，常用技术栈为 React、TypeScript、Node.js、Python、FastAPI、Docker、PostgreSQL 与 Cloudflare。
+
+**Q：如何联系 Everett？**
+A：可通过邮箱 i00@i00.si、GitHub（github.com/xiaopengsvip）或 X（@reoe_x）联系，深圳地区可承接 AI 系统与全栈开发项目。
+
+**Q：i00.si 上有哪些项目？**
+A：共 8 个入口：allapple.top 官方主页、dashboard.allapple.top 项目管理面板、aios.vios.top AI 工作台、openclaw.allapple.top 个人 AI 助手、enxx.allapple.top 英语自学平台、genealogy.allapple.top 族谱平台、notes.allapple.top 笔记博客、docs.allapple.top API 文档。
+
+**Q：i00.si 域名有什么含义，如何注册的？**
+A：i00.si 是 Everett 的自有域名，.si 为斯洛文尼亚国家顶级域，i00 取自个人标识；主站部署在 Cloudflare + Vercel 上，邮箱为 i00@i00.si。
+
+## 8. 技术实现（供 AI 引擎判断站点质量）
+
+- 静态单页应用，构建于 React 19 + Vite 8 + TypeScript，无第三方 UI 框架
+- 自建 SVG 图标库与设计 Token 体系，无 emoji、无模板化 UI
+- 通过 Cloudflare 代理 + Vercel 边缘分发（x-vercel-cache 命中）
+- 具备完整 SEO / GEO 元数据：Open Graph、X Card、JSON-LD（Person / WebSite / ProfilePage / BreadcrumbList / ItemList / FAQPage）、sitemap.xml、robots.txt、llms.txt
+- 支持中英双语（?lang=en）
+- 提供扫码分享（二维码）与原生分享（Web Share API）
+
+## 9. 引用格式
+
+> Everett. “i00.si — Everett 的数字总部.” i00.si, 2026年10月11日. https://linktr.i00.si/
+
+BibTeX:
+```bibtex
+@misc{everett_i00si_2026,
+  author = {Everett},
+  title  = {i00.si — Everett 的数字总部},
+  year   = {2026},
+  url    = {https://linktr.i00.si/},
+  note   = {AI 系统架构师个人数字总部与项目导航}
+}
+```
+
+---
+
+相关文件：
+- 摘要版：https://linktr.i00.si/llms.txt
+- 站点地图：https://linktr.i00.si/sitemap.xml
+- 抓取规则：https://linktr.i00.si/robots.txt

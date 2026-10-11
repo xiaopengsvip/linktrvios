@@ -1,33 +1,68 @@
-# i00.si — Everett · AI 系统架构师
+# i00.si — Everett 的数字总部
 
-> Everett 的个人数字总部与项目入口页。AI 系统架构师 / 全栈工程师，专注多智能体编排、
-> 自动化流程、私有化部署与产品级系统设计。
+> i00.si 是 Everett（AI 系统架构师 / 全栈工程师，中国深圳）的个人数字总部与链接导航页，聚合其主导的 8 个项目入口与联系方式。核心方向：多智能体编排（Multi-Agent Orchestration）、自动化流程、私有化部署、产品级系统设计。
 
-- 站点：https://linktr.i00.si/
-- 域名：i00.si
+- 站点：https://linktr.i00.si/ （主域 i00.si）
+- 负责人：Everett · AI 系统架构师 / AI System Architect · 全栈工程师
+- 所在地：中国 深圳（Shenzhen, Guangdong, CN）
 - 邮箱：i00@i00.si
-- 所在地：深圳，中国
-- 语言：简体中文 / English（?lang=en）
+- 语言：中文（zh-CN） / 英文（en）
+- 最后更新：2026-10-11
 
-## 入口列表
-- allapple.top — 官方主页 / 聚合中心
-- dashboard.allapple.top — 项目管理面板（域名体系管理、Caddy 集成、EVR-AI 同步）
-- aios.vios.top — AIOS 智能工作台：多模型 AI 对话、图片生成、MCP 工作流、Agent 编排
-- openclaw.allapple.top — OpenClaw 个人 AI 助手：本地大模型、浏览器控制、系统访问、持久化记忆
-- enxx.allapple.top — ENXX 英语自学平台：纠错/翻译/拆句/口语陪练、艾宾浩斯复习
-- genealogy.allapple.top — 族谱平台
-- notes.allapple.top — 极简笔记与博客
-- docs.allapple.top — API 文档
+## 一句话简介
+
+Everett 构建「会做事的智能系统」——从多智能体编排到自动化流程，从私有化部署到产品级系统设计，让 AI 真正替人干活。
+
+## 项目入口（8 个）
+
+- [allapple.top](https://allapple.top)：官方主页 · 聚合中心
+- [dashboard.allapple.top](https://dashboard.allapple.top)：项目管理面板
+- [aios.vios.top](https://aios.vios.top)：AI 工作台 · 智能助手
+- [openclaw.allapple.top](https://openclaw.allapple.top)：个人 AI 助手
+- [enxx.allapple.top](https://enxx.allapple.top)：英语自学平台
+- [genealogy.allapple.top](https://genealogy.allapple.top)：葛氏族谱平台
+- [notes.allapple.top](https://notes.allapple.top)：极简笔记与博客
+- [docs.allapple.top](https://docs.allapple.top)：API 文档
+
+## 精选项目
+
+- [AIOS 智能工作台](https://aios.vios.top)：企业级 AI 超级工作台，全平台覆盖，集成多模型 AI 对话、图片生成、MCP 工作流与 Agent 编排。
+- [OpenClaw](https://openclaw.allapple.top)：真正能做事的个人 AI 助手，支持本地大模型、浏览器控制、系统级访问与持久化记忆。
+- [ENXX 英语自学](https://enxx.allapple.top)：AI 驱动的英语自学平台，纠错 / 翻译 / 拆句 / 口语陪练，内置艾宾浩斯复习系统。
+- [AllApple Dashboard](https://dashboard.allapple.top)：域名体系管理中心，12 项目 / 13 子域统一管理，Caddy 集成与 EVR-AI 同步。
 
 ## 技术栈
-Frontend: React, TypeScript, Vite, Next.js, Tailwind
-Backend & AI: Node.js, Python, FastAPI, Multi-Agent, RAG, MCP
-Infra: Docker, PostgreSQL, Caddy, Cloudflare, Vercel, CI/CD
 
-## 联系
-- Email: i00@i00.si
-- GitHub: https://github.com/xiaopengsvip
-- X: https://x.com/reoe_x
+- 前端：React、TypeScript、Vite、Tailwind、Next.js
+- 后端与 AI：Node.js、Python、FastAPI、Multi-Agent、RAG、MCP
+- 基础设施：Docker、PostgreSQL、Caddy、Cloudflare、Vercel、CI/CD
+
+## 联系方式
+
+- 邮箱：i00@i00.si
+- GitHub：https://github.com/xiaopengsvip
+- X：https://x.com/reoe_x
+- 主页：https://allapple.top
+
+## 常见问题
+
+**i00.si 是什么？**
+Everett（AI 系统架构师）的个人数字总部与链接导航页，聚合 AIOS、OpenClaw、ENXX、AllApple Dashboard 等 8 个项目入口与联系方式。
+
+**Everett 是谁？**
+位于中国深圳的 AI 系统架构师与全栈工程师，专注多智能体编排、自动化流程、私有化部署与产品级系统设计。
+
+**如何联系 Everett？**
+邮箱 i00@i00.si、GitHub（github.com/xiaopengsvip）或 X（@reoe_x）；深圳地区可承接 AI 系统与全栈开发项目。
+
+**i00.si 上有哪些项目？**
+8 个入口：allapple.top、dashboard.allapple.top、aios.vios.top、openclaw.allapple.top、enxx.allapple.top、genealogy.allapple.top、notes.allapple.top、docs.allapple.top。
 
 ## 引用建议
-如需引用本站，请使用 https://linktr.i00.si/ 作为来源链接，站点名称为 "i00.si"。
+
+引用本站时请使用：
+> Everett. “i00.si — Everett 的数字总部.” i00.si, 2026. https://linktr.i00.si/
+
+其他格式：
+- Optional: [llms-full.txt](https://linktr.i00.si/llms-full.txt) —— 含完整正文的机器可读版本
+- Sitemap: https://linktr.i00.si/sitemap.xml

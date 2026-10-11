@@ -1,41 +1,63 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="color-scheme" content="dark" />
+  <meta name="supported-color-schemes" content="dark" />
   <meta name="theme-color" content="#08080B" />
+  <meta name="format-detection" content="telephone=no,email=no,address=no" />
 
-  <title>i00.si — Everett · AI 系统架构师</title>
-  <meta name="title" content="i00.si — Everett · AI 系统架构师" />
-  <meta name="description" content="Everett 的数字总部 i00.si：AI 系统架构师 / 全栈工程师。聚合 AIOS 智能工作台、OpenClaw AI 助手、ENXX 英语自学等 8 大项目入口，专注多智能体编排、自动化流程与私有化部署。" />
-  <meta name="keywords" content="i00.si, i00, Everett, AI系统架构师, AI System Architect, 链接导航, linktr, AIOS, OpenClaw, ENXX, 多智能体, 私有化部署, portfolio, 深圳" />
+  <title>i00.si — Everett · AI 系统架构师 / 数字总部</title>
+  <meta name="title" content="i00.si — Everett · AI 系统架构师 / 数字总部" />
+  <meta name="description" content="i00.si 是 Everett（AI 系统架构师 / 全栈工程师，深圳）的数字总部与链接导航：聚合 AIOS 智能工作台、OpenClaw AI 助手、ENXX 英语自学、AllApple Dashboard 等 8 大项目入口，专注多智能体编排、自动化流程与私有化部署。" />
+  <meta name="keywords" content="i00.si,i00,Everett,AI系统架构师,AI System Architect,链接导航,linktr,AIOS,OpenClaw,ENXX,多智能体,Multi-Agent,自动化流程,私有化部署,深圳,全栈工程师,portfolio" />
   <meta name="author" content="Everett" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="publisher" content="i00.si" />
+  <meta name="copyright" content="Everett · i00.si" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="bingbot" content="index, follow, max-image-preview:large" />
+  <meta name="rating" content="general" />
+  <meta name="revisit-after" content="7 days" />
   <link rel="canonical" href="https://linktr.i00.si/" />
 
-  <!-- Open Graph -->
+  <!-- ============ Open Graph（Facebook / Telegram / LinkedIn / 微信 / QQ 通吃） ============ -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="i00.si" />
   <meta property="og:url" content="https://linktr.i00.si/" />
   <meta property="og:title" content="i00.si — Everett · AI 系统架构师" />
-  <meta property="og:description" content="AI 系统架构师的数字总部：8 大项目入口，多智能体编排 · 自动化流程 · 私有化部署。" />
+  <meta property="og:description" content="AI 系统架构师的数字总部：AIOS / OpenClaw / ENXX 等 8 大项目入口 — 多智能体编排 · 自动化流程 · 私有化部署。" />
   <meta property="og:image" content="https://linktr.i00.si/og-image.png" />
+  <meta property="og:image:secure_url" content="https://linktr.i00.si/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="i00.si — Everett 的头像与「AI 系统架构师」标识" />
   <meta property="og:locale" content="zh_CN" />
   <meta property="og:locale:alternate" content="en_US" />
 
-  <!-- Twitter / X -->
+  <!-- 微信 / QQ 缩略图回退（两者会优先读 og:image，其次读 image_src / itemprop） -->
+  <link rel="image_src" href="https://linktr.i00.si/wechat-share.png" />
+  <meta itemprop="image" content="https://linktr.i00.si/wechat-share.png" />
+  <meta name="thumbnail" content="https://linktr.i00.si/wechat-share.png" />
+
+  <!-- ============ X / Twitter Card ============ -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@reoe_x" />
   <meta name="twitter:creator" content="@reoe_x" />
   <meta name="twitter:url" content="https://linktr.i00.si/" />
+  <meta name="twitter:domain" content="linktr.i00.si" />
   <meta name="twitter:title" content="i00.si — Everett · AI 系统架构师" />
-  <meta name="twitter:description" content="AI 系统架构师的数字总部：8 大项目入口，多智能体编排 · 自动化流程 · 私有化部署。" />
-  <meta name="twitter:image" content="https://linktr.i00.si/og-image.png" />
+  <meta name="twitter:description" content="AI 系统架构师的数字总部：AIOS / OpenClaw / ENXX 等 8 大项目入口 — 多智能体编排 · 自动化流程 · 私有化部署。" />
+  <meta name="twitter:image" content="https://linktr.i00.si/x-card.png" />
+  <meta name="twitter:image:src" content="https://linktr.i00.si/x-card.png" />
+  <meta name="twitter:image:alt" content="i00.si — Everett 的数字总部封面：AI 系统架构师 / 8 个项目入口" />
+  <meta name="twitter:image:width" content="1200" />
+  <meta name="twitter:image:height" content="628" />
+  <meta name="twitter:widgets:theme" content="dark" />
 
-  <!-- Icons: PC (ico/16/32) + 移动端 (apple-touch / android) -->
+  <!-- ============ 图标：PC + 移动端 + PWA ============ -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -50,8 +72,21 @@
   <meta name="application-name" content="i00.si" />
   <meta name="msapplication-TileColor" content="#08080b" />
   <meta name="msapplication-TileImage" content="/android-chrome-192x192.png" />
+  <meta name="msapplication-config" content="none" />
+
+  <!-- ============ 多语言 / 地区 ============ -->
   <link rel="alternate" hreflang="zh-CN" href="https://linktr.i00.si/" />
+  <link rel="alternate" hreflang="zh" href="https://linktr.i00.si/" />
   <link rel="alternate" hreflang="en" href="https://linktr.i00.si/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://linktr.i00.si/" />
+
+  <!-- ============ GEO：面向 AI 引擎（llms.txt 约定） ============ -->
+  <link rel="alternate" type="text/markdown" href="https://linktr.i00.si/llms.txt" title="LLM summary" />
+  <link rel="author" href="https://linktr.i00.si/llms.txt" />
+
+  <!-- ============ 性能 ============ -->
+  <link rel="dns-prefetch" href="https://linktr.i00.si" />
+  <link rel="preload" as="image" href="/avatar.webp" type="image/webp" fetchpriority="high" />
 
   <script type="application/ld+json">
   {
@@ -61,44 +96,134 @@
         "@type": "Person",
         "@id": "https://linktr.i00.si/#person",
         "name": "Everett",
+        "alternateName": ["i00", "reoe_x", "xiaopengsvip"],
         "url": "https://linktr.i00.si/",
-        "image": "https://linktr.i00.si/avatar.jpg",
-        "jobTitle": "AI System Architect",
-        "description": "Everett 是 AI 系统架构师与全栈工程师，专注多智能体编排、自动化流程、私有化部署与产品级系统设计。",
-        "address": { "@type": "PostalAddress", "addressLocality": "Shenzhen", "addressCountry": "CN" },
+        "mainEntityOfPage": "https://linktr.i00.si/#profilepage",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://linktr.i00.si/avatar.jpg",
+          "width": 640,
+          "height": 640
+        },
+        "jobTitle": "AI 系统架构师 / AI System Architect",
+        "description": "Everett 是位于深圳的 AI 系统架构师与全栈工程师，专注多智能体编排（Multi-Agent Orchestration）、自动化流程、私有化部署与产品级系统设计，主导 AIOS 智能工作台、OpenClaw AI 助手、ENXX 英语自学平台等项目。",
+        "address": { "@type": "PostalAddress", "addressLocality": "Shenzhen", "addressRegion": "Guangdong", "addressCountry": "CN" },
         "email": "i00@i00.si",
+        "knowsLanguage": ["zh-CN", "en"],
+        "knowsAbout": [
+          "Artificial Intelligence", "Multi-Agent Systems", "AI Orchestration", "AI Agent",
+          "Workflow Automation", "Retrieval-Augmented Generation", "Model Context Protocol",
+          "Private Deployment", "Self-hosting", "Full-stack Development",
+          "React", "TypeScript", "Node.js", "Python", "FastAPI", "Next.js", "Vite",
+          "Docker", "PostgreSQL", "Cloudflare", "Vercel", "CI/CD"
+        ],
         "sameAs": [
           "https://github.com/xiaopengsvip",
           "https://x.com/reoe_x",
           "https://allapple.top"
         ],
-        "knowsAbout": [
-          "Artificial Intelligence", "Multi-Agent Systems", "AIOS", "OpenClaw",
-          "Workflow Automation", "Private Deployment", "React", "TypeScript", "Node.js", "Python"
-        ]
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "business",
+          "email": "i00@i00.si",
+          "availableLanguage": ["zh-CN", "en"]
+        }
       },
       {
         "@type": "WebSite",
         "@id": "https://linktr.i00.si/#website",
         "name": "i00.si — Everett 数字总部",
-        "alternateName": "i00.si 链接导航",
+        "alternateName": ["i00.si 链接导航", "Everett Digital HQ", "i00 数字总部"],
         "url": "https://linktr.i00.si/",
-        "description": "Everett 的个人入口页，聚合 AIOS、OpenClaw、ENXX 等 8 大项目。",
+        "description": "Everett 的个人入口页与链接导航，聚合 AIOS、OpenClaw、ENXX、AllApple Dashboard 等 8 大项目与联系方式。",
         "inLanguage": ["zh-CN", "en"],
-        "publisher": { "@id": "https://linktr.i00.si/#person" }
+        "publisher": { "@id": "https://linktr.i00.si/#person" },
+        "author": { "@id": "https://linktr.i00.si/#person" },
+        "image": "https://linktr.i00.si/og-image.png",
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": [".hero__title", ".hero__bio", ".sechead__t"]
+        }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://linktr.i00.si/#profilepage",
+        "url": "https://linktr.i00.si/",
+        "name": "Everett · i00.si 数字总部",
+        "isPartOf": { "@id": "https://linktr.i00.si/#website" },
+        "about": { "@id": "https://linktr.i00.si/#person" },
+        "mainEntity": { "@id": "https://linktr.i00.si/#person" },
+        "inLanguage": "zh-CN",
+        "primaryImageOfPage": "https://linktr.i00.si/og-image.png",
+        "datePublished": "2026-10-11",
+        "dateModified": "2026-10-11"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://linktr.i00.si/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "i00.si", "item": "https://linktr.i00.si/" },
+          { "@type": "ListItem", "position": 2, "name": "Everett 的数字总部", "item": "https://linktr.i00.si/#links" }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://linktr.i00.si/#links",
+        "name": "Everett 的项目入口导航",
+        "description": "i00.si 聚合的 8 个项目与服务入口。",
+        "numberOfItems": 8,
+        "itemListOrder": "https://schema.org/ItemListOrderAscending",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "allapple.top 官方主页", "description": "官方主页与聚合中心", "url": "https://allapple.top" },
+          { "@type": "ListItem", "position": 2, "name": "dashboard.allapple.top 项目管理面板", "description": "域名与项目管理面板", "url": "https://dashboard.allapple.top" },
+          { "@type": "ListItem", "position": 3, "name": "aios.vios.top AI 工作台", "description": "企业级 AI 智能工作台", "url": "https://aios.vios.top" },
+          { "@type": "ListItem", "position": 4, "name": "openclaw.allapple.top 个人 AI 助手", "description": "本地大模型 + 浏览器控制的 AI 助手", "url": "https://openclaw.allapple.top" },
+          { "@type": "ListItem", "position": 5, "name": "enxx.allapple.top 英语自学平台", "description": "AI 驱动的英语自学平台", "url": "https://enxx.allapple.top" },
+          { "@type": "ListItem", "position": 6, "name": "genealogy.allapple.top 葛氏族谱平台", "description": "家族谱系数字化平台", "url": "https://genealogy.allapple.top" },
+          { "@type": "ListItem", "position": 7, "name": "notes.allapple.top 极简笔记与博客", "description": "极简笔记与写作", "url": "https://notes.allapple.top" },
+          { "@type": "ListItem", "position": 8, "name": "docs.allapple.top API 文档", "description": "接口与开发文档", "url": "https://docs.allapple.top" }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://linktr.i00.si/#projects",
+        "name": "Everett 的精选项目",
+        "numberOfItems": 4,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "AIOS 智能工作台", "applicationCategory": "BusinessApplication", "operatingSystem": "Web, iOS, Android, Windows, macOS, Linux", "description": "企业级 AI 超级工作台，集成多模型对话、图片生成、MCP 工作流与 Agent 编排。", "url": "https://aios.vios.top", "author": { "@id": "https://linktr.i00.si/#person" } } },
+          { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "OpenClaw", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Linux", "description": "真正能做事的个人 AI 助手：本地大模型、浏览器控制、系统级访问与持久化记忆。", "url": "https://openclaw.allapple.top", "author": { "@id": "https://linktr.i00.si/#person" } } },
+          { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "ENXX 英语自学", "applicationCategory": "EducationalApplication", "operatingSystem": "Web", "description": "AI 驱动的英语自学平台：纠错、翻译、拆句、口语陪练，内置艾宾浩斯复习系统。", "url": "https://enxx.allapple.top", "author": { "@id": "https://linktr.i00.si/#person" } } },
+          { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "AllApple Dashboard", "applicationCategory": "DeveloperApplication", "operatingSystem": "Web", "description": "域名体系管理中心：12 项目 / 13 子域统一管理，Caddy 集成与自动同步。", "url": "https://dashboard.allapple.top", "author": { "@id": "https://linktr.i00.si/#person" } } }
+        ]
       },
       {
         "@type": "FAQPage",
+        "@id": "https://linktr.i00.si/#faq",
         "mainEntity": [
           {
             "@type": "Question",
             "name": "i00.si 是什么？",
-            "acceptedAnswer": { "@type": "Answer", "text": "i00.si 是 Everett（AI 系统架构师）的个人数字总部与链接导航页，聚合其主导的 AIOS 智能工作台、OpenClaw AI 助手、ENXX 英语自学等 8 个项目入口与联系方式。" }
+            "acceptedAnswer": { "@type": "Answer", "text": "i00.si 是 Everett（AI 系统架构师）的个人数字总部与链接导航页，聚合其主导的 AIOS 智能工作台、OpenClaw AI 助手、ENXX 英语自学、AllApple Dashboard 等 8 个项目入口与联系方式。" }
+          },
+          {
+            "@type": "Question",
+            "name": "Everett 是谁？",
+            "acceptedAnswer": { "@type": "Answer", "text": "Everett 是位于中国深圳的 AI 系统架构师与全栈工程师，专注多智能体编排、自动化流程、私有化部署与产品级系统设计，常用技术栈为 React、TypeScript、Node.js、Python、FastAPI、Docker、PostgreSQL 与 Cloudflare。" }
           },
           {
             "@type": "Question",
             "name": "如何联系 Everett？",
-            "acceptedAnswer": { "@type": "Answer", "text": "可通过邮箱 i00@i00.si、GitHub（github.com/xiaopengsvip）或 X（@reoe_x）联系。" }
+            "acceptedAnswer": { "@type": "Answer", "text": "可通过邮箱 i00@i00.si、GitHub（github.com/xiaopengsvip）或 X（@reoe_x）联系，深圳地区可承接 AI 系统与全栈开发项目。" }
+          },
+          {
+            "@type": "Question",
+            "name": "i00.si 上有哪些项目？",
+            "acceptedAnswer": { "@type": "Answer", "text": "共 8 个入口：allapple.top 官方主页、dashboard.allapple.top 项目管理面板、aios.vios.top AI 工作台、openclaw.allapple.top 个人 AI 助手、enxx.allapple.top 英语自学平台、genealogy.allapple.top 族谱平台、notes.allapple.top 笔记博客、docs.allapple.top API 文档。" }
+          },
+          {
+            "@type": "Question",
+            "name": "i00.si 域名怎么注册、有什么含义？",
+            "acceptedAnswer": { "@type": "Answer", "text": "i00.si 是 Everett 的自有域名（.si 为斯洛文尼亚国家顶级域），i00 取自个人标识，主站部署在 Cloudflare 与 Vercel 上，邮箱为 i00@i00.si。" }
           }
         ]
       }
@@ -108,6 +233,51 @@
 </head>
 <body>
   <div id="root"></div>
+
+  <!-- ============ 静态内容层：给不执行 JS 的爬虫与 AI 引擎（GPTBot / ClaudeBot / PerplexityBot 等）读取 ============ -->
+  <div id="seo-content" class="seo-only">
+    <h1>i00.si — Everett · AI 系统架构师 / 数字总部</h1>
+    <p>i00.si 是 Everett 的个人数字总部与链接导航页。Everett 是位于中国深圳的 AI 系统架构师与全栈工程师，专注多智能体编排（Multi-Agent Orchestration）、自动化流程、私有化部署与产品级系统设计。本页聚合其主导的 8 个项目入口与联系方式。</p>
+
+    <h2>项目入口（8 个）</h2>
+    <ul>
+      <li><a href="https://allapple.top">allapple.top — 官方主页 · 聚合中心</a></li>
+      <li><a href="https://dashboard.allapple.top">dashboard.allapple.top — 项目管理面板</a></li>
+      <li><a href="https://aios.vios.top">aios.vios.top — AI 工作台 · 智能助手</a></li>
+      <li><a href="https://openclaw.allapple.top">openclaw.allapple.top — 个人 AI 助手</a></li>
+      <li><a href="https://enxx.allapple.top">enxx.allapple.top — 英语自学平台</a></li>
+      <li><a href="https://genealogy.allapple.top">genealogy.allapple.top — 葛氏族谱平台</a></li>
+      <li><a href="https://notes.allapple.top">notes.allapple.top — 极简笔记与博客</a></li>
+      <li><a href="https://docs.allapple.top">docs.allapple.top — API 文档</a></li>
+    </ul>
+
+    <h2>精选项目</h2>
+    <h3>AIOS 智能工作台</h3>
+    <p>企业级 AI 超级工作台，全平台覆盖，集成多模型 AI 对话、图片生成、MCP 工作流与 Agent 编排。地址：<a href="https://aios.vios.top">aios.vios.top</a></p>
+    <h3>OpenClaw</h3>
+    <p>真正能做事的个人 AI 助手。支持本地大模型、浏览器控制、系统级访问与持久化记忆。地址：<a href="https://openclaw.allapple.top">openclaw.allapple.top</a></p>
+    <h3>ENXX 英语自学</h3>
+    <p>AI 驱动的英语自学平台：纠错 / 翻译 / 拆句 / 口语陪练，内置艾宾浩斯复习系统。地址：<a href="https://enxx.allapple.top">enxx.allapple.top</a></p>
+    <h3>AllApple Dashboard</h3>
+    <p>域名体系管理中心：12 项目 / 13 子域统一管理，Caddy 集成与 EVR-AI 同步。地址：<a href="https://dashboard.allapple.top">dashboard.allapple.top</a></p>
+
+    <h2>技术栈</h2>
+    <p>前端：React、TypeScript、Vite、Tailwind、Next.js。后端与 AI：Node.js、Python、FastAPI、Multi-Agent、RAG、MCP。基础设施：Docker、PostgreSQL、Caddy、Cloudflare、Vercel、CI/CD。</p>
+
+    <h2>联系方式</h2>
+    <ul>
+      <li>邮箱：<a href="mailto:i00@i00.si">i00@i00.si</a></li>
+      <li>网站：<a href="https://allapple.top">allapple.top</a></li>
+      <li>GitHub：<a href="https://github.com/xiaopengsvip">github.com/xiaopengsvip</a></li>
+      <li>X：<a href="https://x.com/reoe_x">@reoe_x</a></li>
+    </ul>
+    <p>机器可读摘要：<a href="/llms.txt">/llms.txt</a> · 详细版：<a href="/llms-full.txt">/llms-full.txt</a></p>
+  </div>
+
+  <noscript>
+    <p>本站需要 JavaScript 才能显示完整交互界面。核心信息：i00.si 是 Everett（AI 系统架构师 / 全栈工程师，深圳）的数字总部，聚合 AIOS、OpenClaw、ENXX 等 8 个项目入口。联系邮箱 i00@i00.si。</p>
+  </noscript>
+
   <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
