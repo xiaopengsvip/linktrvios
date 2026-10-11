@@ -26,8 +26,12 @@ export function Reveal({ children, delay = 0, as = 'div', className, style }: Pr
 
     const show = () => {
       if (el.dataset.in === 'true') return;
-      // 隐藏标签页里动画/过渡可能被冻结，直接给终态，绝不留下不可见内容
-      if (document.visibilityState === 'hidden') el.style.animationDuration = '1ms';
+      // 隐藏标签页里合成器可能不推进动画（元素会停在 opacity:0），此时直接给终态。
+      // 绝不允许出现「内容永久不可见」。
+      if (document.visibilityState === 'hidden') {
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+      }
       el.dataset.in = 'true';
     };
 
