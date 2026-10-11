@@ -76,6 +76,9 @@ small = ImageEnhance.Contrast(head).enhance(1.26)
 small = ImageEnhance.Color(small).enhance(1.16)
 for s in (16, 32):
     save(small, f"favicon-{s}.png", s, optimize=True)
+# 顶栏 logo（角色头像即品牌 logo），提供 1x/2x
+for s in (64, 128):
+    save(head, f"logo-{s}.png", s, optimize=True)
 save(head, "favicon-48.png", 48, optimize=True)
 head.resize((48, 48), Image.LANCZOS).save(
     os.path.join(OUT, "favicon.ico"), sizes=[(16, 16), (32, 32), (48, 48)])

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Icon, Wordmark } from './components/Icons';
+import { Icon } from './components/Icons';
 import { Reveal } from './components/Reveal';
 import {
   CONNECT, COPY, LINKS, PROFILE, PROJECTS, SITE, STACK,
@@ -163,7 +163,10 @@ export default function App() {
         <header className="topbar">
           <div className="wrap topbar__inner">
             <a className="brand" href={SITE.url}>
-              <span className="brand__mark"><Wordmark size={17} /></span>
+              <span className="brand__mark">
+                <img src="/logo-64.png" srcSet="/logo-64.png 1x, /logo-128.png 2x"
+                     width={30} height={30} alt="" decoding="async" />
+              </span>
               <span className="brand__text">
                 <span className="brand__name">{SITE.domain}</span>
                 <span className="brand__sub">Digital HQ</span>
