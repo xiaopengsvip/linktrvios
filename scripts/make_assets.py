@@ -85,7 +85,7 @@ head.resize((48, 48), Image.LANCZOS).save(
 print(f"  {'favicon.ico':32s} 16/32/48")
 
 for n, s in (("apple-touch-icon.png", 180), ("android-chrome-192x192.png", 192),
-             ("android-chrome-512x512.png", 512)):
+             ("android-chrome-512x512.png", 512), ("logo-64.png", 64), ("logo-128.png", 128)):
     save(head, n, s, optimize=True)
 
 # maskable：内容 78% 居中，四周用图像底色延展（满足安全区）

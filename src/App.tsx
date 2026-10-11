@@ -78,6 +78,8 @@ export default function App() {
   const [toast, setToast] = useState<string | null>(null);
   const [qrOpen, setQrOpen] = useState(false);
   const [qrSrc, setQrSrc] = useState<string>('');
+  const [copied, setCopied] = useState(false);
+  const copyTimer = useRef<number | undefined>(undefined);
   const reduced = usePrefersReducedMotion();
   const toastTimer = useRef<number | undefined>(undefined);
 
@@ -120,13 +122,28 @@ export default function App() {
     }
   }, [t, flash]);
 
-  /* 二维码按需生成（首开才加载 qrcode，避免拖慢首屏） */
+  /* 复制站点链接：按钮给出明确成功态 */
+  const onCopyLink = useCallback(async () => {
+    let ok = true;
+    try {
+      await navigator.clipboard.writeText(SITE.url);
+    } catch {
+      ok = false;
+    }
+    setCopied(ok);
+    window.clearTimeout(copyTimer.current);
+    copyTimer.current = window.setTimeout(() => setCopied(false), 1800);
+    flash(ok ? t.copiedLink : SITE.url);
+  }, [t, flash]);
+
+  /* 二维码按需生成（首开才加载 qrcode，避免拖慢首屏）
+     容错级别 H：中央叠品牌徽标后依然可扫 */
   useEffect(() => {
     if (!qrOpen || qrSrc) return;
     let alive = true;
     import('qrcode')
       .then((m) => m.toDataURL(SITE.url, {
-        margin: 1, width: 480,
+        margin: 1, width: 480, errorCorrectionLevel: 'H',
         color: { dark: '#050507', light: '#ffffff' },
       }))
       .then((d) => { if (alive) setQrSrc(d); })
@@ -137,6 +154,7 @@ export default function App() {
   useEffect(() => {
     if (!qrOpen) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setQrOpen(false); };
+    setCopied(false);
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     return () => {
@@ -385,19 +403,56 @@ export default function App() {
         </div>
       ) : null}
 
-      {/* ---------------- 二维码弹窗 ---------------- */}
+      {/* ---------------- 扫码浮窗（桌面居中卡片 / 移动端底部抽屉） ---------------- */}
       {qrOpen ? (
-        <div className="modal" role="dialog" aria-modal="true" onClick={() => setQrOpen(false)}>
-          <div className="modal__box" onClick={(e) => e.stopPropagation()}>
-            {qrSrc
-              ? <img className="modal__qr" src={qrSrc} alt="i00.si QR" width={480} height={480} />
-              : <div className="modal__qr" style={{ aspectRatio: '1 / 1', display: 'grid', placeItems: 'center', color: '#111' }}>…</div>}
-            <div className="modal__t">{SITE.host}</div>
-            <div className="modal__d">{t.qrHint}</div>
-            <button className="btn btn--ghost modal__close" onClick={() => setQrOpen(false)}>
-              <span className="btn__icon"><Icon name="close" size={15} /></span>
-              {t.close}
+        <div className="sheet" role="dialog" aria-modal="true" aria-label={t.qrTitle}
+             onClick={() => setQrOpen(false)}>
+          <div className="sheet__panel" onClick={(e) => e.stopPropagation()}>
+            <span className="sheet__grip" aria-hidden="true" />
+            <button className="sheet__x" onClick={() => setQrOpen(false)} aria-label={t.close}>
+              <Icon name="close" size={16} />
             </button>
+
+            <div className="sheet__head">
+              <span className="sheet__mark">
+                <img src="/logo-64.png" srcSet="/logo-64.png 1x, /logo-128.png 2x"
+                     width={34} height={34} alt="" decoding="async" />
+              </span>
+              <span>
+                <span className="sheet__host">{SITE.host}</span>
+                <span className="sheet__sub">{SITE.domain} · Digital HQ</span>
+              </span>
+            </div>
+
+            <h2 className="sheet__t">{t.qrTitle}</h2>
+            <p className="sheet__d">{t.qrHint}</p>
+
+            <div className="qrwrap">
+              {qrSrc
+                ? <img className="qrwrap__img" src={qrSrc} alt={`${SITE.host} QR`} width={480} height={480} />
+                : <div className="qrwrap__skel" />}
+              <span className="qrwrap__brand">
+                <img src="/logo-64.png" width={36} height={36} alt="" decoding="async" />
+              </span>
+            </div>
+
+            <div className="sheet__url">
+              <Icon name="globe" size={14} />
+              <code>{SITE.url.replace(/^https:\/\//, '').replace(/\/$/, '')}</code>
+            </div>
+
+            <div className="sheet__acts">
+              <button className="btn btn--primary" onClick={onCopyLink} data-done={copied}>
+                <span className="btn__icon">
+                  <Icon name={copied ? 'check' : 'copy'} size={15} />
+                </span>
+                {copied ? t.copiedLink : t.copyLink}
+              </button>
+              <button className="btn btn--ghost" onClick={onShare}>
+                <span className="btn__icon"><Icon name="share" size={15} /></span>
+                {t.share}
+              </button>
+            </div>
           </div>
         </div>
       ) : null}
