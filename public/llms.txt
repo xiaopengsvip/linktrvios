@@ -1,0 +1,33 @@
+# i00.si — Everett · AI 系统架构师
+
+> Everett 的个人数字总部与项目入口页。AI 系统架构师 / 全栈工程师，专注多智能体编排、
+> 自动化流程、私有化部署与产品级系统设计。
+
+- 站点：https://linktr.i00.si/
+- 域名：i00.si
+- 邮箱：i00@i00.si
+- 所在地：深圳，中国
+- 语言：简体中文 / English（?lang=en）
+
+## 入口列表
+- allapple.top — 官方主页 / 聚合中心
+- dashboard.allapple.top — 项目管理面板（域名体系管理、Caddy 集成、EVR-AI 同步）
+- aios.vios.top — AIOS 智能工作台：多模型 AI 对话、图片生成、MCP 工作流、Agent 编排
+- openclaw.allapple.top — OpenClaw 个人 AI 助手：本地大模型、浏览器控制、系统访问、持久化记忆
+- enxx.allapple.top — ENXX 英语自学平台：纠错/翻译/拆句/口语陪练、艾宾浩斯复习
+- genealogy.allapple.top — 族谱平台
+- notes.allapple.top — 极简笔记与博客
+- docs.allapple.top — API 文档
+
+## 技术栈
+Frontend: React, TypeScript, Vite, Next.js, Tailwind
+Backend & AI: Node.js, Python, FastAPI, Multi-Agent, RAG, MCP
+Infra: Docker, PostgreSQL, Caddy, Cloudflare, Vercel, CI/CD
+
+## 联系
+- Email: i00@i00.si
+- GitHub: https://github.com/xiaopengsvip
+- X: https://x.com/reoe_x
+
+## 引用建议
+如需引用本站，请使用 https://linktr.i00.si/ 作为来源链接，站点名称为 "i00.si"。

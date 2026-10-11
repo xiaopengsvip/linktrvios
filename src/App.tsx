@@ -1,795 +1,406 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Icon, Wordmark } from './components/Icons';
+import { Reveal } from './components/Reveal';
 import {
-  Globe, Video, NotebookPen, Share2, Mail,
-  QrCode, BadgeCheck, ChevronRight, X,
-  Copy, Check, Sparkles, Zap, PenTool,
-  ExternalLink, Gauge, Bot, Network, BookOpen
-} from 'lucide-react';
-import './index.css';
+  CONNECT, COPY, LINKS, PROFILE, PROJECTS, SITE, STACK,
+  type IconName, type Lang,
+} from './data/content';
 
-/* ============================================================
-   类型定义
-   ============================================================ */
+/* ------------------------------------------------------------
+   工具
+   ------------------------------------------------------------ */
 
-interface LinkItem {
-  id: string;
-  title: string;
-  desc: string;
-  url: string;
-  icon: React.ReactNode;
-  color: string;
-  glowColor: string;
-}
-
-interface Project {
-  id: string;
-  title: string;
-  desc: string;
-  image: string;
-  tags: string[];
-  url: string;
-  color: string;
-}
-
-/* ============================================================
-   多语言文案
-   ============================================================ */
-
-const translations = {
-  zh: {
-    name: 'Everett',
-    title: 'AI 系统架构师 · 全栈开发者',
-    bio: '构建下一代智能生产力系统。从多智能体编排到自动化流程，从私有化部署到产品级系统设计，让 AI 真正为人工作。',
-    digitalCard: '数字名片',
-    sharePage: '分享',
-    linksTitle: '导航',
-    projectsTitle: '精选项目',
-    skillsTitle: '技能领域',
-    socialTitle: '联系我',
-    footer: '© {year} Everett · All rights reserved',
-    scanQR: '扫码访问',
-    close: '关闭',
-    copied: '已复制',
-    copyLink: '复制链接',
-    viewProject: '查看项目',
-  },
-  en: {
-    name: 'Everett',
-    title: 'AI System Architect · Full-stack Dev',
-    bio: 'Building next-generation intelligent productivity systems. From multi-agent orchestration to automation, private deployment to product-level design.',
-    digitalCard: 'Digital Card',
-    sharePage: 'Share',
-    linksTitle: 'LINKS',
-    projectsTitle: 'FEATURED PROJECTS',
-    skillsTitle: 'SKILLS',
-    socialTitle: 'CONNECT',
-    footer: '© {year} Everett · All rights reserved',
-    scanQR: 'Scan to visit',
-    close: 'Close',
-    copied: 'Copied',
-    copyLink: 'Copy Link',
-    viewProject: 'View Project',
-  }
-};
-
-type Lang = keyof typeof translations;
-
-/* ============================================================
-   静态数据
-   ============================================================ */
-
-const links: LinkItem[] = [
-  {
-    id: '1',
-    title: 'allapple.top',
-    desc: '官方主页 · 聚合中心',
-    url: 'https://allapple.top',
-    icon: React.createElement(Globe),
-    color: '#3b82f6',
-    glowColor: 'rgba(59, 130, 246, 0.3)',
-  },
-  {
-    id: '2',
-    title: 'dashboard.allapple.top',
-    desc: '项目管理面板',
-    url: 'https://dashboard.allapple.top',
-    icon: React.createElement(Gauge),
-    color: '#8b5cf6',
-    glowColor: 'rgba(139, 92, 246, 0.3)',
-  },
-  {
-    id: '3',
-    title: 'aios.vios.top',
-    desc: 'AI 工作台 · 智能助手',
-    url: 'https://aios.vios.top',
-    icon: React.createElement(Sparkles),
-    color: '#a855f7',
-    glowColor: 'rgba(168, 85, 247, 0.3)',
-  },
-  {
-    id: '4',
-    title: 'openclaw.allapple.top',
-    desc: '个人 AI 助手',
-    url: 'https://openclaw.allapple.top',
-    icon: React.createElement(Bot),
-    color: '#ec4899',
-    glowColor: 'rgba(236, 72, 153, 0.3)',
-  },
-  {
-    id: '5',
-    title: 'enxx.allapple.top',
-    desc: '英语自学平台',
-    url: 'https://enxx.allapple.top',
-    icon: React.createElement(Zap),
-    color: '#f59e0b',
-    glowColor: 'rgba(245, 158, 11, 0.3)',
-  },
-  {
-    id: '6',
-    title: 'genealogy.allapple.top',
-    desc: '葛氏族谱平台',
-    url: 'https://genealogy.allapple.top',
-    icon: React.createElement(Network),
-    color: '#10b981',
-    glowColor: 'rgba(16, 185, 129, 0.3)',
-  },
-  {
-    id: '7',
-    title: 'notes.allapple.top',
-    desc: '极简笔记与博客',
-    url: 'https://notes.allapple.top',
-    icon: React.createElement(NotebookPen),
-    color: '#06b6d4',
-    glowColor: 'rgba(6, 182, 212, 0.3)',
-  },
-  {
-    id: '8',
-    title: 'docs.allapple.top',
-    desc: 'API 文档',
-    url: 'https://docs.allapple.top',
-    icon: React.createElement(BookOpen),
-    color: '#f43f5e',
-    glowColor: 'rgba(244, 63, 94, 0.3)',
-  },
-];
-
-const projects: Project[] = [
-  {
-    id: '1',
-    title: 'AIOS 智能工作台',
-    desc: '企业级 AI 超级工作台，全平台覆盖，集成多模型 AI 对话、图片生成、MCP 工作流、Agent 编排。',
-    image: '/projects/aios.png',
-    tags: ['AI', 'React', 'Node.js'],
-    url: 'https://aios.vios.top',
-    color: '#a855f7',
-  },
-  {
-    id: '2',
-    title: 'OpenClaw',
-    desc: '真正能做事的个人 AI 助手。支持本地大模型、浏览器控制、系统访问、持久化记忆。',
-    image: '/projects/openclaw.png',
-    tags: ['AI Agent', 'Local LLM', 'Browser'],
-    url: 'https://openclaw.allapple.top',
-    color: '#ec4899',
-  },
-  {
-    id: '3',
-    title: 'ENXX 英语自学',
-    desc: 'AI 驱动的英语自学平台，纠错/翻译/拆句/口语陪练，艾宾浩斯复习系统。',
-    image: '/projects/enxx.png',
-    tags: ['AI', 'Education', 'NLP'],
-    url: 'https://enxx.allapple.top',
-    color: '#f59e0b',
-  },
-  {
-    id: '4',
-    title: 'AllApple Dashboard',
-    desc: '域名体系管理中心，12 项目/13 子域管理，Caddy 集成，EVR-AI 同步。',
-    image: '/projects/dashboard.png',
-    tags: ['Dashboard', 'Next.js', 'DevOps'],
-    url: 'https://dashboard.allapple.top',
-    color: '#8b5cf6',
-  },
-];
-
-const skills = [
-  { name: 'React', color: '#61dafb' },
-  { name: 'TypeScript', color: '#3178c6' },
-  { name: 'Node.js', color: '#339933' },
-  { name: 'Python', color: '#3776ab' },
-  { name: 'AI/ML', color: '#ff6f61' },
-  { name: 'PostgreSQL', color: '#336791' },
-  { name: 'Docker', color: '#2496ed' },
-  { name: 'UI Design', color: '#ff4081' },
-  { name: 'Figma', color: '#f24e1e' },
-  { name: 'Git', color: '#f05032' },
-];
-
-/* ============================================================
-   粒子背景（仅桌面端通过 CSS 控制隐藏）
-   ============================================================ */
-
-const Particles: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const particlesRef = useRef<Array<{
-    x: number; y: number; vx: number; vy: number;
-    radius: number; opacity: number; color: string;
-  }>>([]);
-
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const colors = ['#00f5ff', '#a855f7', '#ec4899', '#3b82f6'];
-
-    const count = Math.min(60, Math.floor(window.innerWidth / 25));
-    particlesRef.current = Array.from({ length: count }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      radius: Math.random() * 2 + 0.5,
-      opacity: Math.random() * 0.4 + 0.1,
-      color: colors[Math.floor(Math.random() * colors.length)],
-    }));
-
-    const handleMouse = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener('mousemove', handleMouse);
-
-    let raf: number;
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const particles = particlesRef.current;
-      const mouse = mouseRef.current;
-
-      particles.forEach((p, i) => {
-        const dx = p.x - mouse.x;
-        const dy = p.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          const force = (150 - dist) / 150 * 0.5;
-          p.vx += (dx / dist) * force * 0.1;
-          p.vy += (dy / dist) * force * 0.1;
-        }
-
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.99;
-        p.vy *= 0.99;
-
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.opacity;
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const d = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
-          if (d < 120) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = p.color;
-            ctx.globalAlpha = (1 - d / 120) * 0.15;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      });
-
-      ctx.globalAlpha = 1;
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouse);
-      cancelAnimationFrame(raf);
-    };
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(mq.matches);
+    const on = () => setReduced(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
   }, []);
+  return reduced;
+}
 
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ position: 'absolute', inset: 0, zIndex: 1 }}
-      aria-hidden="true"
-    />
-  );
-};
-
-/* ============================================================
-   打字机效果组件
-   ============================================================ */
-
-const Typewriter: React.FC<{ text: string; speed?: number }> = ({ text, speed = 40 }) => {
-  const [display, setDisplay] = useState('');
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    setDisplay('');
-    setDone(false);
-    let i = 0;
-    const timer = setInterval(() => {
-      i += 1;
-      setDisplay(text.slice(0, i));
-      if (i >= text.length) {
-        clearInterval(timer);
-        setDone(true);
-      }
-    }, speed);
-    return () => clearInterval(timer);
-  }, [text, speed]);
-
-  return (
-    <span className="typewriter-text">
-      {display}
-      {!done && <span className="typewriter-cursor" />}
-    </span>
-  );
-};
-
-/* ============================================================
-   3D Tilt 卡片组件（鼠标跟随倾斜）
-   ============================================================ */
-
-const TiltCard: React.FC<{
-  children: React.ReactNode;
-  className?: string;
-  maxTilt?: number;
-  style?: React.CSSProperties;
-}> = ({ children, className, maxTilt = 8, style }) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const handleMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    el.style.transform = `perspective(800px) rotateY(${x * maxTilt}deg) rotateX(${-y * maxTilt}deg) translateY(-3px)`;
+/** 卡片内鼠标跟随光斑（桌面指针才启用） */
+function spotlightHandlers() {
+  return {
+    onMouseMove: (e: React.MouseEvent<HTMLElement>) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+    },
   };
+}
 
-  const handleLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) translateY(0)';
-  };
+/* ------------------------------------------------------------
+   背景层
+   ------------------------------------------------------------ */
 
+function Backdrop() {
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{ ...style, transition: 'transform 0.15s ease-out', transformStyle: 'preserve-3d' }}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-    >
-      {children}
+    <div className="bg" aria-hidden="true">
+      <div className="bg__aura bg__aura--1" />
+      <div className="bg__aura bg__aura--2" />
+      <div className="bg__aura bg__aura--3" />
+      <div className="bg__grid" />
+      <div className="bg__noise" />
     </div>
   );
-};
+}
 
-/* ============================================================
-   二维码弹窗
-   ============================================================ */
+/* ------------------------------------------------------------
+   区块标题
+   ------------------------------------------------------------ */
 
-const QRModal: React.FC<{ onClose: () => void; lang: Lang }> = ({ onClose, lang }) => {
-  const t = translations[lang];
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    import('qrcode').then((QRCode: any) => {
-      if (canvasRef.current) {
-        QRCode.toCanvas(canvasRef.current, 'https://linktr.vios.top', {
-          width: 200,
-          margin: 2,
-          color: { dark: '#ffffff', light: '#00000000' },
-        });
-      }
-    });
-  }, []);
-
-  // Esc 关闭弹窗
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
-
+function SectionHead({ idx, title, note }: { idx: string; title: string; note?: string }) {
   return (
-    <motion.div
-      className="modal-overlay"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-      role="presentation"
-    >
-      <motion.div
-        className="modal-content"
-        role="dialog"
-        aria-modal="true"
-        aria-label={t.scanQR}
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        onClick={(e: React.MouseEvent) => e.stopPropagation()}
-        style={{ position: 'relative' }}
-      >
-        <button
-          className="modal-close"
-          onClick={onClose}
-          aria-label={t.close}
-        >
-          <X size={16} />
-        </button>
-        <div className="modal-title" id="qr-modal-title">{t.scanQR}</div>
-        <canvas ref={canvasRef} style={{ margin: '0 auto', display: 'block' }} aria-label={t.scanQR} />
-      </motion.div>
-    </motion.div>
+    <div className="sechead">
+      <div className="sechead__l">
+        <span className="sechead__idx">{idx}</span>
+        <h2 className="sechead__t">{title}</h2>
+      </div>
+      {note ? <span className="sechead__n">{note}</span> : null}
+    </div>
   );
-};
+}
 
-/* ============================================================
-   主应用
-   ============================================================ */
+/* ------------------------------------------------------------
+   App
+   ------------------------------------------------------------ */
 
-const App: React.FC = () => {
-  const [lang, setLang] = useState<Lang>('zh');
-  const [showQR, setShowQR] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const t = translations[lang];
+export default function App() {
+  const [lang, setLang] = useState<Lang>(() => {
+    const q = new URLSearchParams(window.location.search).get('lang');
+    if (q === 'en' || q === 'zh') return q;
+    return navigator.language?.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  });
+  const [toast, setToast] = useState<string | null>(null);
+  const [qrOpen, setQrOpen] = useState(false);
+  const [qrSrc, setQrSrc] = useState<string>('');
+  const reduced = usePrefersReducedMotion();
+  const toastTimer = useRef<number | undefined>(undefined);
 
-  const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText('https://linktr.vios.top');
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      const el = document.createElement('textarea');
-      el.value = 'https://linktr.vios.top';
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+  const t = COPY[lang];
+
+  const flash = useCallback((msg: string) => {
+    setToast(msg);
+    window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2000);
   }, []);
 
-  const handleShare = useCallback(async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Everett · AI System Architect | vios.top',
-          text: t.name + ' · ' + t.title + ' — ' + 'https://linktr.vios.top',
-          url: 'https://linktr.vios.top',
-        });
-      } catch {}
-    } else {
-      handleCopy();
-    }
-  }, [handleCopy, t.name, t.title]);
-
-  // 分享到 X（与 X 主页入口分开）
-  const handleShareToX = useCallback(() => {
-    const shareTexts = {
-      zh: 'Everett · AI 系统架构师 | vios.top 🚀 多智能体编排 · 自动化流程 · 私有化部署，聚合 AIOS/OpenClaw/ENXX 等 8 大项目',
-      en: 'Everett · AI System Architect | vios.top 🚀 Multi-agent orchestration · Automation · Private deployment — AIOS, OpenClaw, ENXX & more',
-    };
-    const text = shareTexts[lang];
-    const url = 'https://linktr.vios.top';
-    const via = 'reoe_x';
-    const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&via=${via}&hashtags=${encodeURIComponent('Everett,vios,AI')}`;
-    window.open(xUrl, '_blank', 'width=550,height=420');
+  useEffect(() => {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    const url = new URL(window.location.href);
+    if (lang === 'en') url.searchParams.set('lang', 'en');
+    else url.searchParams.delete('lang');
+    window.history.replaceState({}, '', url.toString());
   }, [lang]);
 
-  const currentYear = new Date().getFullYear();
+  /* 分享 */
+  const onShare = useCallback(async () => {
+    const data = { title: t.shareTitle, text: t.bio, url: SITE.url };
+    try {
+      if (navigator.share) {
+        await navigator.share(data);
+        return;
+      }
+      await navigator.clipboard.writeText(SITE.url);
+      flash(lang === 'zh' ? '链接已复制' : 'Link copied');
+    } catch { /* 用户取消，忽略 */ }
+  }, [t, lang, flash]);
+
+  /* 复制邮箱 */
+  const onCopyMail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(SITE.email);
+      flash(t.copied);
+    } catch {
+      window.location.href = `mailto:${SITE.email}`;
+    }
+  }, [t, flash]);
+
+  /* 二维码按需生成（首开才加载 qrcode，避免拖慢首屏） */
+  useEffect(() => {
+    if (!qrOpen || qrSrc) return;
+    let alive = true;
+    import('qrcode')
+      .then((m) => m.toDataURL(SITE.url, {
+        margin: 1, width: 480,
+        color: { dark: '#050507', light: '#ffffff' },
+      }))
+      .then((d) => { if (alive) setQrSrc(d); })
+      .catch(() => { if (alive) setQrSrc(''); });
+    return () => { alive = false; };
+  }, [qrOpen, qrSrc]);
+
+  useEffect(() => {
+    if (!qrOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setQrOpen(false); };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [qrOpen]);
+
+  const statList = useMemo(
+    () => [
+      { n: String(LINKS.length), l: t.statProjects },
+      { n: '6+', l: t.statYears },
+      { n: '24/7', l: t.statUptime },
+    ],
+    [t],
+  );
 
   return (
     <>
-      {/* 背景层 */}
-      <div className="bg-canvas">
-        <div className="mesh-gradient" />
-        <div className="orb orb-1" />
-        <div className="orb orb-2" />
-        <div className="orb orb-3" />
-        <div className="stars" />
-        <div className="shooting-star" />
-        <div className="shooting-star" />
-        <div className="shooting-star" />
-        <div className="grid-overlay" />
-        <Particles />
-        <div className="noise" />
-      </div>
+      <Backdrop />
 
-      {/* 语言切换 */}
-      <div className="lang-toggle" role="group" aria-label="Language">
-        <button
-          className={`lang-btn ${lang === 'zh' ? 'active' : ''}`}
-          onClick={() => setLang('zh')}
-          aria-label="切换到中文"
-          aria-pressed={lang === 'zh'}
-        >
-          中
-        </button>
-        <button
-          className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
-          onClick={() => setLang('en')}
-          aria-label="Switch to English"
-          aria-pressed={lang === 'en'}
-        >
-          EN
-        </button>
-      </div>
+      <div className="shell">
+        {/* ---------------- 顶栏 ---------------- */}
+        <header className="topbar">
+          <div className="wrap topbar__inner">
+            <a className="brand" href={SITE.url}>
+              <span className="brand__mark"><Wordmark size={17} /></span>
+              <span className="brand__text">
+                <span className="brand__name">{SITE.domain}</span>
+                <span className="brand__sub">Digital HQ</span>
+              </span>
+            </a>
 
-      {/* 主内容 */}
-      <div className="main-content">
-        {/* 个人资料 */}
-        <motion.div
-          className="profile"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <div className="avatar-wrapper">
-            <div className="avatar-ring">
-              <img
-                className="avatar"
-                src="/avatar.jpg"
-                alt="Profile"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'data:image/svg+xml,' + encodeURIComponent(
-                    '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect fill="%230a0a1a" width="200" height="200"/><circle fill="%232a2a4a" cx="100" cy="80" r="35"/><ellipse fill="%232a2a4a" cx="100" cy="160" rx="50" ry="35"/></svg>'
-                  );
-                }}
-              />
-            </div>
-            <div className="verified-badge" aria-hidden="true">
-              <BadgeCheck />
+            <div className="topbar__right">
+              <div className="seg" role="group" aria-label="Language">
+                <button className="seg__btn" data-on={lang === 'zh'} onClick={() => setLang('zh')}>中</button>
+                <button className="seg__btn" data-on={lang === 'en'} onClick={() => setLang('en')}>EN</button>
+              </div>
+              <button className="iconbtn" onClick={onShare} aria-label={lang === 'zh' ? '分享' : 'Share'}>
+                <Icon name="share" size={17} />
+              </button>
+              <button className="iconbtn" onClick={() => setQrOpen(true)} aria-label={t.ctaQr}>
+                <Icon name="qr" size={17} />
+              </button>
             </div>
           </div>
+        </header>
 
-          <div className="profile-name shimmer-text">{t.name}</div>
-          <div className="profile-title">{t.title}</div>
-          <div className="profile-bio">
-            <Typewriter text={t.bio} speed={35} />
-          </div>
-        </motion.div>
+        <main className="wrap">
+          {/* ---------------- Hero ---------------- */}
+          <section className="hero">
+            <div className="hero__grid">
+              <Reveal className="avatar">
+                <span className="avatar__ring" aria-hidden="true" />
+                <picture>
+                  <source srcSet={PROFILE.avatar} type="image/webp" />
+                  <img className="avatar__img" src={PROFILE.avatarFallback} alt={PROFILE.name}
+                       width={150} height={150} fetchPriority="high" decoding="async" />
+                </picture>
+                <span className="avatar__badge" aria-hidden="true"><Icon name="shield" size={15} /></span>
+              </Reveal>
 
-        {/* 操作按钮 */}
-        <motion.div
-          className="actions"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-        >
-          <button className="action-btn" onClick={() => setShowQR(true)} aria-label={t.digitalCard}>
-            <QrCode />
-            {t.digitalCard}
-          </button>
-          <button className="action-btn" onClick={handleShare} aria-label={copied ? t.copied : t.sharePage}>
-            {copied ? <Check /> : <Share2 />}
-            {copied ? t.copied : t.sharePage}
-          </button>
-        </motion.div>
+              <div style={{ width: '100%' }}>
+                <Reveal delay={60}>
+                  <span className="status">
+                    <span className="status__dot" />
+                    {t.status}
+                  </span>
+                </Reveal>
 
-        {/* 技能领域 */}
-        <motion.div
-          className="skills-section"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-        >
-          <div className="section-title">{t.skillsTitle}</div>
-          <div className="skills-grid">
-            {skills.map((skill, i) => (
-              <motion.div
-                key={skill.name}
-                className="skill-tag"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + i * 0.05, duration: 0.3 }}
-                whileHover={{ scale: 1.1, y: -2 }}
-                style={{ borderColor: `${skill.color}40` }}
-              >
-                <span className="skill-dot" style={{ background: skill.color }} />
-                {skill.name}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                <Reveal delay={110}>
+                  <h1 className="hero__name">
+                    {t.nameLine1} <em>{t.nameAccent}</em>
+                    <br />
+                    {t.nameLine2}
+                  </h1>
+                </Reveal>
 
-        {/* 导航链接 */}
-        <div className="section-title">{t.linksTitle}</div>
-        <div className="links-section">
-          {links.map((link, i) => (
-            <motion.div
-              key={link.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.1 + i * 0.08,
-                duration: 0.6,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-              style={{ width: '100%' }}
-            >
-              <TiltCard>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-card"
-                  style={{
-                    '--glow-color': link.glowColor,
-                    animationDelay: `${i * 0.1}s`,
-                  } as React.CSSProperties}
-                >
-                  <div
-                    className="link-icon"
-                    style={{
-                      background: `${link.color}15`,
-                      color: link.color,
-                    }}
-                  >
-                    {link.icon}
+                <Reveal delay={160}>
+                  <p className="hero__role">{PROFILE.name} — {t.role}</p>
+                </Reveal>
+
+                <Reveal delay={200}>
+                  <p className="hero__bio">{t.bio}</p>
+                </Reveal>
+
+                <Reveal delay={240}>
+                  <div className="hero__actions">
+                    <button className="btn btn--primary" onClick={onCopyMail}>
+                      <span className="btn__icon"><Icon name="mail" size={16} /></span>
+                      {t.ctaMail}
+                      <span className="btn__icon" style={{ opacity: 0.6 }}><Icon name="copy" size={14} /></span>
+                    </button>
+                    <button className="btn btn--ghost" onClick={() => setQrOpen(true)}>
+                      <span className="btn__icon"><Icon name="qr" size={16} /></span>
+                      {t.ctaQr}
+                    </button>
                   </div>
-                  <div className="link-info">
-                    <div className="link-title">{link.title}</div>
-                    <div className="link-desc">{link.desc}</div>
-                  </div>
-                  <div className="link-arrow">
-                    <ChevronRight size={18} />
-                  </div>
-                </a>
-              </TiltCard>
-            </motion.div>
-          ))}
-        </div>
+                </Reveal>
 
-        {/* 精选项目 */}
-        <motion.div
-          className="projects-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7 }}
-        >
-          <div className="section-title">{t.projectsTitle}</div>
-          <div className="projects-grid">
-            {projects.map((project, i) => (
-              <motion.a
-                key={project.id}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-card"
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ delay: i * 0.12, duration: 0.5 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-              >
-                <div className="project-image">
-                  <img src={project.image} alt={project.title} loading="lazy" />
-                  <div className="project-overlay">
-                    <ExternalLink size={20} />
-                  </div>
-                </div>
-                <div className="project-info">
-                  <div className="project-title">{project.title}</div>
-                  <div className="project-desc">{project.desc}</div>
-                  <div className="project-tags">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="project-tag" style={{ color: project.color }}>
-                        {tag}
-                      </span>
+                <Reveal delay={290}>
+                  <div className="stats">
+                    {statList.map((s) => (
+                      <div className="stat" key={s.l}>
+                        <div className="stat__n">{s.n}</div>
+                        <div className="stat__l">{s.l}</div>
+                      </div>
                     ))}
                   </div>
-                </div>
-              </motion.a>
-            ))}
-          </div>
-        </motion.div>
+                </Reveal>
+              </div>
+            </div>
+          </section>
 
-        {/* 社交链接 */}
-        <motion.div
-          className="social-section"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-        >
-          <div className="section-title">{t.socialTitle}</div>
-          <div className="social-grid">
-            {/* GitHub 主页 */}
-            <a
-              href="https://github.com/xiaopengsvip"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-btn"
-              aria-label="GitHub"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-              </svg>
-            </a>
-            {/* X 主页入口 */}
-            <a
-              href="https://x.com/reoe_x"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-btn"
-              aria-label="X (Twitter)"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231h0.001Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
-              </svg>
-            </a>
-            {/* 分享到 X（与主页入口分开） */}
-            <button
-              className="social-btn twitter-share"
-              onClick={handleShareToX}
-              aria-label="分享到 X"
-            >
-              <Share2 size={20} aria-hidden="true" />
-            </button>
-            {/* 邮箱 */}
-            <a
-              href="mailto:x@allapple.top"
-              className="social-btn"
-              aria-label="Email"
-            >
-              <Mail size={20} aria-hidden="true" />
-            </a>
-            {/* 复制链接 */}
-            <button
-              className="social-btn"
-              onClick={handleCopy}
-              aria-label={t.copyLink}
-            >
-              {copied ? <Check size={20} aria-hidden="true" /> : <Copy size={20} aria-hidden="true" />}
-            </button>
-          </div>
-        </motion.div>
+          {/* ---------------- 导航 ---------------- */}
+          <section className="section" id="links">
+            <Reveal>
+              <SectionHead idx="01" title={t.navLinks} note={t.navLinksHint} />
+            </Reveal>
+            <div className="links">
+              {LINKS.map((l, i) => (
+                <Reveal key={l.id} delay={Math.min(i * 45, 360)}>
+                  <a
+                    className="lcard"
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ ['--tint' as string]: l.tint }}
+                    {...spotlightHandlers()}
+                  >
+                    <span className="lcard__ico"><Icon name={l.icon} size={21} /></span>
+                    <span className="lcard__body">
+                      <span className="lcard__t">{l.title}</span>
+                      <span className="lcard__d">{l.desc}</span>
+                    </span>
+                    <span className="lcard__go" aria-hidden="true"><Icon name="arrowUpRight" size={16} /></span>
+                  </a>
+                </Reveal>
+              ))}
+            </div>
+          </section>
 
-        {/* 页脚 */}
-        <div className="footer">
-          <div className="footer-content">
-            <span>{t.footer.replace('{year}', String(currentYear))}</span>
-            <span className="footer-dot">·</span>
-            <span>vios.top · Everett</span>
+          {/* ---------------- 精选项目 ---------------- */}
+          <section className="section" id="work">
+            <Reveal>
+              <SectionHead idx="02" title={t.navProjects} note={t.navProjectsHint} />
+            </Reveal>
+            <div className="projects">
+              {PROJECTS.map((p, i) => (
+                <Reveal key={p.id} delay={Math.min(i * 70, 280)}>
+                  <a
+                    className="pcard"
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ ['--tint' as string]: p.tint }}
+                  >
+                    <span className="pcard__media">
+                      <img src={p.image} alt={p.title} loading="lazy" decoding="async" width={1200} height={750} />
+                      <span className="pcard__tag">{p.tag}</span>
+                    </span>
+                    <span className="pcard__body">
+                      <span className="pcard__t">
+                        {p.title}
+                        <Icon name="arrowUpRight" size={15} />
+                      </span>
+                      <span className="pcard__d">{p.desc}</span>
+                      <span className="chips">
+                        {p.chips.map((c) => <span className="chip" key={c}>{c}</span>)}
+                      </span>
+                    </span>
+                  </a>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          {/* ---------------- 技术栈 ---------------- */}
+          <section className="section" id="stack">
+            <Reveal>
+              <SectionHead idx="03" title={t.navStack} />
+            </Reveal>
+            <div className="stack">
+              {STACK.map((g, i) => (
+                <Reveal key={g.label} delay={i * 70}>
+                  <div className="stackcol" style={{ ['--tint' as string]: g.tint }}>
+                    <div className="stackcol__h">
+                      <span className="stackcol__dot" />
+                      {g.label}
+                    </div>
+                    <div className="stacklist">
+                      {g.items.map((it) => <span className="stackitem" key={it}>{it}</span>)}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          {/* ---------------- 联系 ---------------- */}
+          <section className="section" id="connect">
+            <Reveal>
+              <SectionHead idx="04" title={t.navConnect} note={SITE.domain} />
+            </Reveal>
+            <div className="connect">
+              {CONNECT.map((c, i) => (
+                <Reveal key={c.id} delay={i * 55}>
+                  <a
+                    className="ccard"
+                    href={c.href}
+                    {...(c.id === 'mail' ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                  >
+                    <span className="ccard__ico"><Icon name={c.icon as IconName} size={18} /></span>
+                    <span>
+                      <span className="ccard__l">{c.label}</span>
+                      <span className="ccard__v">{c.value}</span>
+                    </span>
+                  </a>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        </main>
+
+        {/* ---------------- 页脚 ---------------- */}
+        <footer className="footer">
+          <div className="wrap footer__inner">
+            <div className="footer__mono">© {SITE.year} {SITE.domain} · {t.footerNote}</div>
+            <div className="footer__links footer__mono">
+              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href={PROFILE.x} target="_blank" rel="noopener noreferrer">X</a>
+              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            </div>
           </div>
-        </div>
+        </footer>
       </div>
 
-      {/* 二维码弹窗 */}
-      <AnimatePresence>
-        {showQR && <QRModal onClose={() => setShowQR(false)} lang={lang} />}
-      </AnimatePresence>
+      {/* ---------------- Toast ---------------- */}
+      {toast ? (
+        <div className="toast" role="status">
+          <span className="toast__dot"><Icon name="check" size={15} /></span>
+          {toast}
+        </div>
+      ) : null}
+
+      {/* ---------------- 二维码弹窗 ---------------- */}
+      {qrOpen ? (
+        <div className="modal" role="dialog" aria-modal="true" onClick={() => setQrOpen(false)}>
+          <div className="modal__box" onClick={(e) => e.stopPropagation()}>
+            {qrSrc
+              ? <img className="modal__qr" src={qrSrc} alt="i00.si QR" width={480} height={480} />
+              : <div className="modal__qr" style={{ aspectRatio: '1 / 1', display: 'grid', placeItems: 'center', color: '#111' }}>…</div>}
+            <div className="modal__t">{SITE.host}</div>
+            <div className="modal__d">{t.qrHint}</div>
+            <button className="btn btn--ghost modal__close" onClick={() => setQrOpen(false)}>
+              <span className="btn__icon"><Icon name="close" size={15} /></span>
+              {t.close}
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {/* 供 reduced-motion 场景下禁止动效 */}
+      <span hidden aria-hidden="true" data-reduced={reduced} />
     </>
   );
-};
-
-export default App;
+}

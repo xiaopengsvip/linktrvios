@@ -1,0 +1,17 @@
+{
+  "name": "i00.si — Everett 数字总部",
+  "short_name": "i00.si",
+  "description": "Everett 的个人入口页：AI 系统架构师，聚合 8 大 AI 项目入口。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08080b",
+  "theme_color": "#08080b",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/maskable-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
